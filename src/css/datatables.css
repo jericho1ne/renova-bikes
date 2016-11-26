@@ -1,0 +1,161 @@
+/*
+	DataTables overrides 
+ */ 
+
+// Wrapper
+.dataTables_wrapper {
+	margin: auto;
+}
+// If we want to hide the header row
+// .dataTables_wrapper table thead {
+// 	display: none;
+// }
+
+.border-bottom {
+	border-bottom: 2px solid #333 !important;
+}
+.border-collapse {
+	border-collapse: collapse !important;
+}
+
+// Table Body
+.dataTable tbody {
+	background-color: #fff;
+}
+
+.dataTable th {
+	padding: 0px 0px 0px 2px;
+}
+
+// Table Row Headers
+.header-row {
+	background-color: purple !important;
+	padding: 20px;
+}
+.dataTable tr.line-item {
+	border-bottom: 1px solid #eaeaea;
+}
+
+// Prev / Next Pagination buttons
+
+// .paginate_button.previous.disabled,
+// .paginate_button.next.disabled {
+// 	color: #fefefe;
+// 	font-size: 20px;
+// 	padding: 0px 10px;
+//     cursor: not-allowed;
+//     color: #666 !important;
+//     border: 1px solid transparent;
+//     background: transparent;
+//     box-shadow: none;
+// }
+.dataTables_paginate {
+	text-align: center !important;
+	margin-top: 20px !important;
+	padding-bottom: 20px;
+}
+
+// Important is necessary to override datatables' default
+.even-bgcolor {
+	background-color: #fefefe !important;
+}
+.odd-bgcolor {
+	background-color: #DCDCDC !important;
+}
+
+
+//
+// Datatables @media queries
+// 
+@media screen and (max-width: 767px) {
+	#bg-plate {
+		height: 300px;
+	}
+	.dataTables_wrapper {
+		max-width: 600px;
+		// border: 1px solid yellow;
+	}
+	.dataTable th,
+	.dataTable td {
+		padding: 1px 4px !important;
+	}
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	#bg-plate {
+		height: 410px;
+	}
+	.dataTables_wrapper {
+		max-width: 800px;
+		// border: 1px solid yellow;
+	}
+	.dataTables_wrapper th,
+	.dataTable td {
+		padding: 6px 3px !important;
+	}
+}
+@media screen and (min-width: 1025px) and (max-width: 1199px) {
+	#bg-plate {
+		height: 480px;
+	}
+	.dataTables_wrapper {
+		max-width: 1000px;
+		// border: 1px solid orange;
+	}
+	.dataTables_wrapper th,
+	.dataTable td {
+		padding: 4px !important;
+	}
+}
+@media screen and (min-width: 1200px) {
+	#bg-plate {
+		height: 520px;
+	}
+	.dataTables_wrapper {
+		max-width: 1200px;
+	}
+	.dataTables_wrapper th,
+	.dataTable td {
+		padding: 4px !important;
+	}
+}
+
+
+
+/*	override datatables.min.css + related classes			*/
+.dataTables_length {
+	width: auto;
+	text-align: left;
+}
+
+.dataTables_filter {
+	width: 100% !important;
+	color: #777;
+	text-align: left;
+	// @include buildRegularFont($font-md); 
+	float: left;
+	margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_filter label {
+	width: 99%;
+	display: block;
+	padding: 4px 0px;
+	font-size: 16px;
+	text-align: center !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+	margin: auto !important;
+	display: block;
+	height: 30px;
+	// @include buildRegularFont($font-md);
+	width: 60% !important;
+	max-width: 400px;
+	padding: 4px 2px 4px 2px;
+	border: 1px solid #aaa;
+	// @include border-radius(2px);
+	background: #fff;
+	outline: 0;
+	color: #333;
+	box-shadow: 0 2px 2px #ccc, 0 -1px #fff inset;
+}

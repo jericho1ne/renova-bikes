@@ -1,0 +1,4 @@
+*.psd
+.tmp/
+app/
+node_modules/

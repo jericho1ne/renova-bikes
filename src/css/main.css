@@ -1,0 +1,422 @@
+/*-------------------- HTML tags -------------------*/
+body {
+	// background: url("../media/images/bg_subtle_dots.png") !important;
+	// font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Hind', sans-serif;
+	background-color: #efefef !important;	// $almost-white;
+	font-size: 12px;
+	color: #333;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+/* font options */
+// font-family: 'Oswald', sans-serif;
+// font-family: 'Libre Franklin', sans-serif;
+// font-family: 'Hind', sans-serif; 
+.container-full {
+	padding-right: 4px;
+    padding-left: 4px;
+	margin-right: auto;
+    margin-left: auto;
+}
+
+.fixed-top {
+ 	position: fixed;
+ 	top: 0;
+ 	width: 100%;
+    border-width: 0 0 1px;
+}
+.w100p {
+	width: 100%;
+}
+
+.bike-photo {
+	width: 100%;
+	padding: 1px;
+	margin: 2px 4px;
+}
+
+img.bike-photo {
+	border: 1px solid #333;
+}
+.bike-header-cell {
+	left: 0px;
+	padding: 4px;
+}
+
+.left {
+	text-align: left !important;
+}
+.h50 {
+	height: 50px;
+}
+.w20p {
+	width: 20%;
+}
+.w15p {
+	width: 15%;
+}
+.w10p {
+	width: 10%;
+}
+.w5p {
+	width: 10%;
+}
+.nowrap {
+	white-space: nowrap;
+}
+
+.bg-header {
+	background-color: #fff !important;
+}
+.gray {
+	color: #999 !important;
+}
+.bg-gray {
+	background-color: #999 !important;
+}
+.bg-dark {
+	background-color: #444 !important;
+}
+.not-available {
+	font-family: 'Libre Franklin', sans-serif;
+	font-style: italic;
+	padding-left: 20%;
+	text-align: center;
+	color: #999;
+	font-size: 12px;
+}
+.text-bike-maker {
+	font-family: 'Libre Franklin', sans-serif;
+	font-size: 16px;
+	font-weight: 800;
+	color: #000;
+	letter-spacing: 0.5px;
+	padding: 4px 0px 0px 0px;
+	display: block;
+}
+.text-xlg {
+	font-family: 'Libre Franklin', sans-serif;
+	font-size: 28px;
+	font-weight: 800;
+	color: #fff;
+	letter-spacing: 0px;
+	padding: 12px 0px 0px 0px;
+	display: block;
+	text-shadow: 1px 2px 2px rgba(30, 30, 30, 0.6);
+}
+.text-lg {
+	font-family: 'Libre Franklin', sans-serif;
+	font-size: 20px;
+	font-weight: 400;
+	color: #fff;
+	letter-spacing: -1px;
+	padding: 12px 0px 0px 2px;
+	display: block;
+	text-shadow: 1px 1px 2px rgba(20, 20, 20, 0.9);
+}
+.text-md {
+	font-size: 14px;
+	font-weight: 300;
+	color: #666;
+	padding: 0px 0px 0px 2px;
+	display: block;
+}
+.text-sm {
+	font-size: 12px;
+	font-weight: 300;
+	color: #666;
+	padding: 0px 0px 0px 2px;
+	display: block;
+}
+
+.pad-left-4 {
+	padding-left: 4px;
+}
+.pad-bot-10 {
+	padding-bottom: 10px;
+}
+.pad-top-20 {
+	padding-top: 20px;
+}
+.pad-top-30 {
+	padding-top: 30px;
+}
+.pad-top-40 {
+	padding-top: 40px;
+}
+.pad-top-50 {
+	padding-top: 50px;
+}
+.margin-top-20 {
+	margin-top: 20px;
+}
+.margin-top-30 {
+	margin-top: 30px;
+}
+
+#bg-plate {
+    background-size: cover !important;
+    background-color: #000 !important;
+	// background: url('../media/backgrounds/will.jpg') no-repeat center bottom scroll;
+}
+#content-parent {
+	max-width: 100%;
+	margin: 0px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+.event-tile {
+	position: relative;
+	height: 100%;
+	//max-height: 94%;
+	width: 100%;
+	max-width: 480px; 
+	// @include border-radius(3px);
+	overflow: hidden;
+	padding: 0 0 2px 0px;
+	margin: 0px;
+	background-color: rgba(240, 240, 240, 1);
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	// border-bottom: 1px solid $gray-mid;
+}
+.event-tile-bottom {
+	position: absolute;
+	cursor: pointer;
+	border-radius: 4px;
+	width: auto;
+	max-width: 94%;
+	height: auto;
+	bottom: 6px;
+	left: 8px;
+	margin-left: 0px;
+	padding: 3px 0px 1px 0px;
+	box-shadow: 0 0 0 #888,0 -3px 38px rgba(0, 0, 0, .4);
+	border: 1px solid #eee;
+	background-color: rgba(240,240,240,0.96);
+	overflow: hidden;
+}
+.event-tile-bottom:hover {
+	background-color: rgba(240, 240, 240, 1);
+	border: 1px solid purple;
+}
+.event-tile-color-bar {
+	position: relative;
+	height: auto;
+    bottom: -2px;
+    width: 101%;
+    padding: 3px 10px;
+    z-index: 1;
+}
+
+.blur {
+	filter: blur(0.9px) !important;
+}
+
+.link, .link a {
+	font-weight: bold;
+	letter-spacing: 0.75px;
+	line-height: 1.25;
+	// Use the following three together or onlky first like will be indented
+	padding: 2px 6px;
+	white-space: pre-wrap;
+	display: block; 
+
+	background: none;
+	text-transform: uppercase;
+	@include border-radius(3px);
+	// background-color: $gray-light !important;
+	border: 1px solid transparent;
+}
+
+.link:hover {
+	border: 1px solid #888;
+	cursor: pointer;
+}
+
+.border {
+	border: 1px solid pink;
+}
+
+
+.toggle-button {
+	width: auto;
+	padding: 6px 12px;
+	vertical-align: middle;
+	outline: none;
+	@include border-radius(2px);
+	// background-color: $gray-dark;
+	// color: $almost-white;
+	// opacity: 0.88;
+	margin: 3px;
+	border: 1px solid transparent;
+}
+.toggle-button:hover {
+	// color: $gray-light;
+	outline: none;
+	opacity: 1;
+	transition: all .2s ease-in-out;
+}
+.toggle-button:active {
+	// color: $gray-dark;
+	// Make the icon shrink slighlty
+	border: 1px solid transparent;
+	outline: none;
+	opacity: 1;
+	transition: all .2s ease-in-out;
+}
+.toggle-button-active {
+	background-color: purple;
+}
+
+
+img.link:hover {
+	background-color: #B4CEE7 !important;
+	cursor: pointer;
+}
+
+.photo-caption {
+	// @include buildRegularFont($font-md);
+	color: #fff;
+	position: absolute;
+	bottom: 30px;
+	// background: rgba(0, 0, 0, 0.8);
+	background: rgba(86, 56, 92, 0.94);
+	padding: 6px 10px 6px 10px;
+	left: 12px;
+}
+
+.scroll-y {
+	overflow-y: scroll;
+}
+
+/*------------------- Event info  -----------*/
+/* override jquery ui */
+.ui-widget-content{
+	overflow: scroll;
+}
+.block-notice {
+	@include border-radius(4px);
+	padding: 12px;
+	background-color: red;
+}
+.text-input {
+	// @include buildRegularFont($font-xsm);
+	padding: 1px 4px;
+	// @include border-radius(2px);
+	background-color: #dcdcdc;
+	border: 0px;
+	text-align: center;
+}
+
+select {
+	padding: 6px;
+	min-width: 20px;
+	margin: 0 6px 0 6px;
+	border-radius: 2px;
+	box-shadow: 0 3px 2px #ccc, 0 -1px #fff inset;
+	background: #eee;
+	border: 1px solid #eee;
+	outline: none;
+	display: inline-block;
+	color: #999;
+	font-size: 14px;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	appearance:none;
+	cursor:pointer;
+}
+
+/*  override bootstrap */
+.modal-header {
+	color: #fff;
+	background-color: indigo;
+}
+.modal-footer {
+	text-align: center !important;
+}
+.modal-dialog {
+	width: 100% !important;
+	margin: 0px !important;
+}
+.modal-content {
+	width: 100% !important;
+	min-height: 500px !important;
+	max-width: 768px !important;
+	border-radius: 0px !important;
+}
+.modal-body {
+	min-height: 400px !important;
+}
+#artistModal {
+	padding: 0px !important;
+}
+
+button.close {
+	font-size: 3em;
+	padding: 6px;
+	margin: -3px 3px;
+	opacity: 1;
+	color: #fff;
+}
+button.close:hover {
+	opacity: 0.75 !important;
+	color: #fff !important;
+}
+
+
+
+@media screen and (max-width: 767px) {
+	.bike-photo {
+		margin: 2px 4px 2px 0px;
+	}
+	.bike-header-cell {
+		max-width: 80px;
+	}
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	.bike-photo {
+		margin: 2px 4px 2px 0px;
+	}
+	.bike-header-cell {
+		max-width: 160px;
+	}
+}
+@media screen and (min-width: 1025px) and (max-width: 1199px) {
+	.bike-photo {
+		margin: 4px 8px 2px 0px;
+	}
+	.bike-header-cell {
+		max-width: 200px;
+	}
+}
+@media screen and (min-width: 1200px) {
+	.bike-photo {
+		margin: 8px 16px 2px 0px;
+	}
+	.bike-header-cell {
+		max-width: 240px;
+	}
+}
+
+.paginate_button {
+	font-family: 'Oswald', sans-serif;
+	font-weight: 800;
+	padding: 10px 20px;
+	margin: 1px;
+	font-size: 20px;
+    display: inline;
+	text-transform: uppercase !important;
+    background-color: transparent;
+}
+.paginate_button:not(.disabled) {
+	color: #53a3f1;
+	cursor: pointer;
+    background-color: #444;  
+}
+.paginate_button:not(.disabled):hover {
+	background-color: #666;
+}
