@@ -52,140 +52,149 @@ require_once 'php/getBikeData.php';
 	</div>
 
 	<!-- Bike Listings -->
-	<div class="container-full margin-top-20">
-		<table id="bikesForSale" class="border-collapse responsive nowrap border-bottom w100p">
-			<thead class="">
-				<?php 
-					$skipDisplay = [
-						'Photos', 
-						'Notes', 
-						'Use', 
-						'Country', 
-						'Wheelsize', 
-						'Style',
-						'Display'
-					];
+	<div class="row">
+    <!-- <div class="col-lg-12 text-center">> -->
+		<div class="container margin-top-20">
+			<table id="bikesForSale" class="border-collapse responsive nowrap border-bottom w100p">
+				<thead class="">
+					<?php 
+						$skipDisplay = [
+							'Photos', 
+							'Notes', 
+							'Use', 
+							'Country', 
+							'Wheelsize', 
+							'Style',
+							'Display'
+						];
 
-					foreach ($headerRows as $header) {
-						if (in_array($header, $skipDisplay)) {
-							continue;
+						foreach ($headerRows as $header) {
+							if (in_array($header, $skipDisplay)) {
+								continue;
+							}
+							$hiddenClasses = '';
+							if (in_array($header, ['Gearing', 'Color'])) {
+								$hiddenClasses = 'hidden-xs';
+							}
+							echo 
+								'<th class="left h50 bg-header '.$hiddenClasses.'">' . 
+									'<span class="gray left text-sm">'.
+										'<a href="#">'.$header.'</a></span>' . 
+								'</th>';
 						}
-						$hiddenClasses = '';
-						if ($header == 'Gearing') {
-							$hiddenClasses = 'hidden-xs';
-						}
-						echo 
-							'<th class="left h50 bg-header '.$hiddenClasses.'">' . 
-								'<span class="gray left text-sm">'.
-									'<a href="#">'.$header.'</a></span>' . 
-							'</th>';
-					}
-				?>
-			</thead>
-			<tbody>
-				<?php 
-					foreach ($tableData as $i => $bike) {
-						// Don't show hidden bikes 
-						if (trim(strtolower($bike['Display'])) == "n") {
-							continue;
-						}
-						echo '<tr>';
-						
-						//
-						// PHOTOS
-						// 
-						// If no photos exist, default to a placeholder
-						$firstPhoto = '<span class="not-available">- n/a -</span>';			
+					?>
+				</thead>
+				<tbody>
+					<?php 
+						foreach ($tableData as $i => $bike) {
+							// Don't show hidden bikes 
+							if (trim(strtolower($bike['Display'])) == "n") {
+								continue;
+							}
+							echo '<tr>';
+							
+							//
+							// PHOTOS
+							// 
+							// If no photos exist, default to a placeholder
+							$firstPhoto = '<span class="not-available">- n/a -</span>';			
 
 
-						// At least one photo in string
-						if (count($bike['Photos']) && isset($bike['Photos'][0])) {
-							$firstPhoto = '<img src="' . trim($bike['Photos'][0]) . '" class="bike-photo">';
-						}
+							// At least one photo in string
+							if (count($bike['Photos']) && isset($bike['Photos'][0])) {
+								$firstPhoto = '<img src="' . trim($bike['Photos'][0]) . '" class="bike-photo">';
+							}
 
-						//
-						// SIZE
-						// 
-						$bikeSize = $bike['Size'];
-						if (is_numeric($bikeSize)) {
-							if ($bikeSize < 30) {
-								$bikeSize .= "in";
+							//
+							// SIZE
+							// 
+							$bikeSize = $bike['Size'];
+							if (is_numeric($bikeSize)) {
+								if ($bikeSize < 30) {
+									$bikeSize .= "in";
+								}
+								else {
+									$bikeSize .= "cm";
+								}
+							}
+
+							// Set up information for pop up modal
+							$bikeName =  $bike['Make'] . ' ' . $bike['Model'] . ' '. $bike['Year'];
+
+							//
+							// PRICE
+							// 
+							$bikePrice = trim($bike['Price']);
+
+							if (stripos($bikePrice, '$') === false && strlen($bikePrice) > 2) {
+								$bikePrice = '$' . $bikePrice;
 							}
 							else {
-								$bikeSize .= "cm";
+								$bikePrice = 'ask';
 							}
+
+							// Photo (links to carousel popup)
+							echo 
+								'<td class="bike-header-cell w10p left">' . 
+									'<a href="#bikeDetailModal" class="portfolio-link" ' . 
+										'data-toggle="modal" '.
+										'data-name="' . $bikeName . '" '.
+										'data-price="' . $bikePrice . '" '.
+									'>' .
+										$firstPhoto . 
+									'</a>' .
+
+								'</td>';
+
+							// Make / Model
+							echo 
+								'<td class="left w10p pad-left-4 nowrap" data-sort="' . $bike['Make'] . $bike['Model'] . '">' . 
+									'<span class="text-bike-maker">' . $bike['Make'] . '</span>' . 
+									'<span class="text-sm">' . $bike['Model'] . '</span>' . 
+									'<span class="text-sm">' . $bike['Year'] . '</span>' . 
+								'</td>';
+
+							// Use
+							echo 
+								'<td class="left w5p" data-sort="' . $bike['Use'] .'">' . 
+									'<span class="text-sm">' . $bike['Use'] . '</span>' . 
+								'</td>';
+
+							// Size
+							echo 
+								'<td class="left w5p" data-sort="' . $bikeSize .'">' . 
+									'<span class="text-sm">' . $bikeSize . '</span>' . 
+								'</td>';
+
+							// Color
+							echo 
+								'<td class="left w5p hidden-xs" data-sort="' . $bike['Color'] .'">' . 
+									'<span class="text-sm">' . $bike['Color'] . '</span>' . 
+								'</td>';
+
+							// Gearing
+							echo 
+								'<td class="left w5p hidden-xs" data-sort="' . $bike['Gearing'] .'">' . 
+									'<span class="text-sm">' . $bike['Gearing'] . '</span>' . 
+								'</td>';
+
+							// Price
+							echo 
+								'<td class="left w5p" data-sort="' . $bikePrice . '">' . 
+									'<span class="text-md">' . $bikePrice . '</span>' . 
+								'</td>';
 						}
-
-						// Set up information for pop up modal
-						$bikeName =  $bike['Make'] . ' ' . $bike['Model'] . ' '. $bike['Year'];
-
-						//
-						// PRICE
-						// 
-						$bikePrice = trim($bike['Price']);
-
-						if (stripos($bikePrice, '$') === false && strlen($bikePrice) > 2) {
-							$bikePrice = '$' . $bikePrice;
-						}
-						else {
-							$bikePrice = 'ask';
-						}
-
-						// Photo (links to carousel popup)
-						echo 
-							'<td class="bike-header-cell w10p left">' . 
-								'<a href="#bikeDetailModal" class="portfolio-link" ' . 
-									'data-toggle="modal" '.
-									'data-name="' . $bikeName . '" '.
-									'data-price="' . $bikePrice . '" '.
-								'>' .
-									$firstPhoto . 
-								'</a>' .
-
-							'</td>';
-
-						// Make / Model
-						echo 
-							'<td class="left w10p pad-left-4 nowrap" data-sort="' . $bike['Make'] . $bike['Model'] . '">' . 
-								'<span class="text-bike-maker">' . $bike['Make'] . '</span>' . 
-								'<span class="text-sm">' . $bike['Model'] . '</span>' . 
-								'<span class="text-sm">' . $bike['Year'] . '</span>' . 
-							'</td>';
-
-						// Use
-						echo 
-							'<td class="left w5p" data-sort="' . $bike['Use'] .'">' . 
-								'<span class="text-sm">' . $bike['Use'] . '</span>' . 
-							'</td>';
-
-						// Size
-						echo 
-							'<td class="left w5p" data-sort="' . $bikeSize .'">' . 
-								'<span class="text-sm">' . $bikeSize . '</span>' . 
-							'</td>';
-
-						// Gearing
-						echo 
-							'<td class="left w5p hidden-xs" data-sort="' . $bike['Gearing'] .'">' . 
-								'<span class="text-sm">' . $bike['Gearing'] . '</span>' . 
-							'</td>';
-
-						// Price
-						echo 
-							'<td class="left w5p" data-sort="' . $bikePrice . '">' . 
-								'<span class="text-md">' . $bikePrice . '</span>' . 
-							'</td>';
-					}
-				?>
-			</tbody>
-		</table>
+					?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	
 	<!-- Bootstrap Theme JavaScript -->
-    <script src="js/agency.min.js"></script>
+  <script src="js/agency.min.js"></script>
 </body>
 
 <script>

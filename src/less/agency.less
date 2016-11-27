@@ -9,7 +9,7 @@ body {
 }
 
 .text-muted {
-    color: @gray-light;
+    color: @gray-lighter;
 }
 
 .text-primary {
@@ -20,6 +20,12 @@ body {
     height: 30px;
     margin: 10px;
     border-right: 1px solid #FFF;
+}
+
+.horizontal-divider {
+    width: 50px;
+    margin: 30px auto;
+    border-bottom: 1px solid #FFF;
 }
 
 p {
@@ -260,22 +266,22 @@ header {
 }
 
 .herotext {
-    background-color: @gray;
     text-align: center;
-    color: white;
     .intro-text {
         padding-top: 10px;
         padding-bottom: 6px;
+        .intro-heading {
+            color: @gray-light;
+            font-size: 50px;
+            line-height: 50px;
+            margin-bottom: 20px;
+        }
         .intro-lead-in {
+            color: @gray-dark;
             .serif-font;
             font-size: 22px;
             line-height: 22px;
             margin-bottom: 10px;
-        }
-        .intro-heading {
-            font-size: 50px;
-            line-height: 50px;
-            margin-bottom: 20px;
         }
     }
 }
@@ -302,17 +308,17 @@ header {
 // Global Section Styles
 
 section {
-    padding: 80px 0;
+    background-color: @gray-lighter;
+    padding: 120px 0;
     h2.section-heading {
         font-size: 40px;
         margin-top: 0;
-        margin-bottom: 15px;
+        margin-bottom: 35px;
     }
     h3.section-subheading {
         font-size: 16px;
         .serif-font;
         text-transform: none;
-        font-style: italic;
         font-weight: 400;
         margin-top: 15px;
     }
@@ -320,7 +326,7 @@ section {
 
 @media(min-width:768px) {
     section {
-        padding: 100px 0;
+        padding: 120px 0;
     }
 }
 
@@ -614,10 +620,20 @@ aside.clients {
     }
 }
 
-// Contact Section
 
-section#contact {
+// Custom Section Styles
+section#featured-bikes {
+    background-color: @gray-lightest;
+}
+section#services {
+    background-color: @gray-lighter;
+}
+section#about {
     background-color: @gray-light;
+}
+    
+section#contact {
+    background-color: @gray;
     background-position: center;
     background-repeat: no-repeat;
     .section-heading {
@@ -742,7 +758,6 @@ ul.social-buttons {
         p.item-intro {
             margin: 20px 0 30px;
             .serif-font;
-            font-style: italic;
             font-size: 16px;
         }
         ul.list-inline {

@@ -8,7 +8,7 @@ body {
   font-family: 'Hind', sans-serif;
 }
 .text-muted {
-  color: #777777;
+  color: #e6e6e6;
 }
 .text-primary {
   color: #53a3f1;
@@ -17,6 +17,11 @@ body {
   height: 30px;
   margin: 10px;
   border-right: 1px solid #FFF;
+}
+.horizontal-divider {
+  width: 50px;
+  margin: 30px auto;
+  border-bottom: 1px solid #FFF;
 }
 p {
   font-size: 14px;
@@ -56,10 +61,10 @@ h6 {
   margin: 0 auto;
 }
 .bg-light-gray {
-  background-color: #eeeeee;
+  background-color: #e6e6e6;
 }
 .bg-darkest-gray {
-  background-color: #222222;
+  background-color: #404040;
 }
 .btn-primary {
   color: white;
@@ -153,7 +158,7 @@ fieldset[disabled] .btn-xl.active {
   background-color: white;
 }
 .navbar-custom {
-  background-color: #222222;
+  background-color: #404040;
   border-color: transparent;
 }
 .navbar-custom .navbar-brand {
@@ -206,7 +211,7 @@ fieldset[disabled] .btn-xl.active {
   background-color: #248aed;
 }
 .navbar-plain {
-  background-color: #222222;
+  background-color: #404040;
   border-color: transparent;
 }
 .navbar-plain .navbar-brand {
@@ -276,7 +281,7 @@ fieldset[disabled] .btn-xl.active {
 }
 @media (min-width: 768px) {
   .navbar-custom.affix {
-    background-color: #222222;
+    background-color: #404040;
     padding: 4px 0;
   }
   .navbar-custom.affix .navbar-brand {
@@ -319,24 +324,24 @@ header .intro-text .intro-heading {
   margin-bottom: 20px;
 }
 .herotext {
-  background-color: #555555;
   text-align: center;
-  color: white;
 }
 .herotext .intro-text {
   padding-top: 10px;
   padding-bottom: 6px;
 }
+.herotext .intro-text .intro-heading {
+  color: #cccccc;
+  font-size: 50px;
+  line-height: 50px;
+  margin-bottom: 20px;
+}
 .herotext .intro-text .intro-lead-in {
+  color: #737373;
   font-family: 'Oswald', sans-serif;
   font-size: 22px;
   line-height: 22px;
   margin-bottom: 10px;
-}
-.herotext .intro-text .intro-heading {
-  font-size: 50px;
-  line-height: 50px;
-  margin-bottom: 20px;
 }
 @media (min-width: 768px) {
   header .intro-text {
@@ -356,24 +361,24 @@ header .intro-text .intro-heading {
   }
 }
 section {
-  padding: 80px 0;
+  background-color: #e6e6e6;
+  padding: 120px 0;
 }
 section h2.section-heading {
   font-size: 40px;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 35px;
 }
 section h3.section-subheading {
   font-size: 16px;
   font-family: 'Oswald', sans-serif;
   text-transform: none;
-  font-style: italic;
   font-weight: 400;
   margin-top: 15px;
 }
 @media (min-width: 768px) {
   section {
-    padding: 100px 0;
+    padding: 120px 0;
   }
 }
 .service-heading {
@@ -631,8 +636,17 @@ section h3.section-subheading {
 aside.clients img {
   margin: 50px auto;
 }
+section#featured-bikes {
+  background-color: #fcfcfc;
+}
+section#services {
+  background-color: #e6e6e6;
+}
+section#about {
+  background-color: #cccccc;
+}
 section#contact {
-  background-color: #777777;
+  background-color: #a6a6a6;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -660,27 +674,27 @@ section#contact ::-webkit-input-placeholder {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
-  color: #eeeeee;
+  color: #e6e6e6;
 }
 section#contact :-moz-placeholder {
   /* Firefox 18- */
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
-  color: #eeeeee;
+  color: #e6e6e6;
 }
 section#contact ::-moz-placeholder {
   /* Firefox 19+ */
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
-  color: #eeeeee;
+  color: #e6e6e6;
 }
 section#contact :-ms-input-placeholder {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
-  color: #eeeeee;
+  color: #e6e6e6;
 }
 section#contact .text-danger {
   color: #e74c3c;
@@ -707,7 +721,7 @@ ul.social-buttons {
 }
 ul.social-buttons li a {
   display: block;
-  background-color: #222222;
+  background-color: #404040;
   height: 46px;
   width: 46px;
   border-radius: 100%;
@@ -755,7 +769,6 @@ ul.social-buttons li a:active {
 .portfolio-modal .modal-content p.item-intro {
   margin: 20px 0 30px;
   font-family: 'Oswald', sans-serif;
-  font-style: italic;
   font-size: 16px;
 }
 .portfolio-modal .modal-content ul.list-inline {
@@ -781,7 +794,7 @@ ul.social-buttons li a:active {
   height: 75px;
   width: 1px;
   margin-left: 35px;
-  background-color: #222222;
+  background-color: #404040;
   transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   /* IE 9 */
@@ -792,7 +805,7 @@ ul.social-buttons li a:active {
 .portfolio-modal .close-modal .lr .rl {
   height: 75px;
   width: 1px;
-  background-color: #222222;
+  background-color: #404040;
   transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   /* IE 9 */
