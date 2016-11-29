@@ -57,6 +57,9 @@ h6 {
   font-weight: 700;
   margin-bottom: 20px;
 }
+h3 {
+  line-height: 34px;
+}
 .img-centered {
   margin: 0 auto;
 }
