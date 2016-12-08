@@ -4,11 +4,13 @@ require_once 'common.php';
 // Changing the source type changes the URL parsing logic
 $urlType = 'html';	// 'html' or 'json'
 
+// https://docs.google.com/spreadsheets/d/1ZK1qCPPpWJXGelLctQIKGvrdPoldCJF7VxepObEKXlc/gviz/tq?tqx=out:html&gid=0
+
 $url = 'https://docs.google.com/spreadsheets/d/1ZK1qCPPpWJXGelLctQIKGvrdPoldCJF7VxepObEKXlc/gviz/tq' . 
 	'?tqx=out:' . $urlType . '&gid=0';
 
 // Local, for testing
-// $url = "bikes.html";
+$url = "bike-data.html";
 
 // Grab raw table data
 $rawData =  file_get_contents($url);
@@ -36,7 +38,7 @@ else if ($urlType == 'html') {
 
 			// Determine if header row
 			if ($i == 0) {
-				$headerRows[] = $cellValue;
+				$headerRows[] = trim($cellValue, chr(0xC2).chr(0xA0));
 			}
 
 			// If blank header, we're done
@@ -66,10 +68,22 @@ else if ($urlType == 'html') {
 					
 // Go through deleting empty entries and trimming spaces
 foreach ($tableData as $bikeIndex => $bike) {
+	// Remove bikes that have a "hidden" display flag
 	if (trim($bike['Display']) == 'n') {
 		unset($tableData[$bikeIndex]);
 		continue;
 	}
+
+	// Add a common size attribute
+	$bikeSize = $bike['Size'];
+	if (is_numeric($bikeSize)) {
+		// Assume that frame size is in inches
+		if ($bikeSize < 30) {
+			// 1 in = 2.54cm, convert accordingly
+			$bikeSize = floor($bikeSize * 2.54);
+		}
+	}
+	$tableData[$bikeIndex]['SizeInCm'] = $bikeSize;
 
 	// Create photo array from CSV string
 	$photosArray = explode(',', trim($bike['Photos']));
@@ -101,5 +115,7 @@ foreach ($tableData as $bikeIndex => $bike) {
 } // End loop to get images
 
 $tableData = array_values($tableData);
-//pr($tableData);
+$json_string = json_encode($tableData);
+
+echo(str_replace('\u00a0', '', $json_string));
 ?>

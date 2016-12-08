@@ -1,0 +1,29 @@
+# https://davidwalsh.name/editor-config
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# JS indent
+[scripts/*.js]
+indent_style = space
+indent_size = 4
+
+# CSS indent
+[styles/*.js]
+indent_style = space
+indent_size = 4
+
+[Gruntfile.js]
+indent_style = tab
+indent_size = 4
+
+[gulpfile.js]
+indent_style = tab
+indent_size = 4
+
+# Indentation override for all JS under vendor directory
+[scripts/vendor/**.js]
+indent_style = space
+indent_size = 4

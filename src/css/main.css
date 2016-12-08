@@ -45,6 +45,13 @@ img.bike-photo {
 	padding: 4px;
 }
 
+.select-dropdown {
+	color: #53a3f1;
+	font-weight: bold;
+	font-family: 'Oswald', sans-serif;		// Libre Franklin or Oswald
+	font-size: 150%;
+	border: 1px solid gray;
+}
 .left {
 	text-align: left !important;
 }
@@ -159,7 +166,6 @@ img.bike-photo {
 #bg-plate {
     background-size: cover !important;
     background-color: #000 !important;
-	// background: url('../media/backgrounds/will.jpg') no-repeat center bottom scroll;
 }
 #content-parent {
 	max-width: 100%;
@@ -168,49 +174,71 @@ img.bike-photo {
 	margin-right: auto;
 	margin-left: auto;
 }
-.event-tile {
+
+
+/** 
+ *    Loading spinner  
+ */
+.loading {
+	font-size: 10px;
+	margin: 10px auto;
+	text-indent: -9999em;
+	width: 3em;
+	height: 3em;
+	border-radius: 58%;
+	background: #ffffff;
+	background: linear-gradient(to right, #DBD12C 10%, rgba(255, 252, 210, 0) 42%);
 	position: relative;
-	height: 100%;
-	//max-height: 94%;
-	width: 100%;
-	max-width: 480px; 
-	// @include border-radius(3px);
-	overflow: hidden;
-	padding: 0 0 2px 0px;
-	margin: 0px;
-	background-color: rgba(240, 240, 240, 1);
-	background-repeat: no-repeat !important;
-	background-size: cover !important;
-	// border-bottom: 1px solid $gray-mid;
+	-webkit-animation: load3 1.4s infinite linear;
+	animation: load3 1.4s infinite linear;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
 }
-.event-tile-bottom {
+.loading:before {
+	width: 0%;
+	height: 0%;
+	background: #ffffff;
+	border-radius: 100% 0 0 0;
 	position: absolute;
-	cursor: pointer;
-	border-radius: 4px;
-	width: auto;
-	max-width: 94%;
-	height: auto;
-	bottom: 6px;
-	left: 8px;
-	margin-left: 0px;
-	padding: 3px 0px 1px 0px;
-	box-shadow: 0 0 0 #888,0 -3px 38px rgba(0, 0, 0, .4);
-	border: 1px solid #eee;
-	background-color: rgba(240,240,240,0.96);
-	overflow: hidden;
+	top: 0;
+	left: 0;
+	content: '';
 }
-.event-tile-bottom:hover {
-	background-color: rgba(240, 240, 240, 1);
-	border: 1px solid purple;
+.loading:after {
+	background: #fff;
+	width: 80%;
+	height: 90%;
+	border-radius: 50%;
+	content: '';
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
-.event-tile-color-bar {
-	position: relative;
-	height: auto;
-    bottom: -2px;
-    width: 101%;
-    padding: 3px 10px;
-    z-index: 1;
+@-webkit-keyframes load3 {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
 }
+@keyframes load3 {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+	  -webkit-transform: rotate(360deg);
+	  transform: rotate(360deg);
+	}
+}
+/* END LOADING SPINNER */
 
 .blur {
 	filter: blur(0.9px) !important;
