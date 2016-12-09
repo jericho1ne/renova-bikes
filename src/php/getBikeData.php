@@ -74,6 +74,29 @@ foreach ($tableData as $bikeIndex => $bike) {
 		continue;
 	}
 
+	// SIZE
+	$bikeSize = $bike['Size'];
+	if (is_numeric($bikeSize)) {
+		if ($bikeSize < 30) {
+			$bikeSize .= "in";
+		}
+		else {
+			$bikeSize .= "cm";
+		}
+	}
+	$tableData[$bikeIndex]['Size'] = $bikeSize;
+
+	// PRICE
+	$bikePrice = trim($bike['Price']);
+	if (stripos($bikePrice, '$') === false && strlen($bikePrice) > 2) {
+		$bikePrice = '$' . $bikePrice;
+	}
+	else {
+		$bikePrice = 'ask';
+	}
+	$tableData[$bikeIndex]['Price'] = $bikePrice;
+
+
 	// Add a common size attribute
 	$bikeSize = $bike['Size'];
 	if (is_numeric($bikeSize)) {

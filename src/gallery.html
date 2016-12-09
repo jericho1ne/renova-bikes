@@ -48,7 +48,7 @@
 	</div>
 	
 	<!-- Bike Fit -->
-	<div class="container">
+	<!-- <div class="container">
 		<div class="row col-lg-12">
 			<div class="col-md-6 text-center">
 			
@@ -67,146 +67,17 @@
 				</select>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	
 	<!-- Bike Listings -->
 	<div class="row">
 
-	<div class="col-lg-12 text-center">
-		<div class="container margin-top-20">
-			<div id="bikes"></div>
-			<!-- <table id="bikesForSale" class="border-collapse responsive nowrap border-bottom w100p">
-				<thead class="">
-					<?php 
-						$skipDisplay = [
-							'Photos', 
-							'Notes', 
-							'Use', 
-							'Country', 
-							'Wheelsize', 
-							'Style',
-							'Display'
-						];
-
-						foreach ($headerRows as $header) {
-							if (in_array($header, $skipDisplay)) {
-								continue;
-							}
-							$hiddenClasses = '';
-							if (in_array($header, ['Gearing', 'Color'])) {
-								$hiddenClasses = 'hidden-xs';
-							}
-							echo 
-								'<th class="left h50 bg-header '.$hiddenClasses.'">' . 
-									'<span class="gray left text-sm">'.
-										'<a href="#">'.$header.'</a></span>' . 
-								'</th>';
-						}
-					?>
-				</thead>
-				<tbody>
-					<?php 
-						foreach ($tableData as $i => $bike) {
-							// Don't show hidden bikes 
-							if (trim(strtolower($bike['Display'])) == "n") {
-								continue;
-							}
-							echo '<tr>';
-							
-							//
-							// PHOTOS
-							// 
-							// If no photos exist, default to a placeholder
-							$firstPhoto = '<span class="not-available">- n/a -</span>';			
-
-
-							// At least one photo in string
-							if (count($bike['Photos']) && isset($bike['Photos'][0])) {
-								$firstPhoto = '<img src="' . trim($bike['Photos'][0]) . '" class="bike-photo">';
-							}
-
-							//
-							// SIZE
-							// 
-							$bikeSize = $bike['Size'];
-							if (is_numeric($bikeSize)) {
-								if ($bikeSize < 30) {
-									$bikeSize .= "in";
-								}
-								else {
-									$bikeSize .= "cm";
-								}
-							}
-
-							// Set up information for pop up modal
-							$bikeName =  $bike['Make'] . ' ' . $bike['Model'] . ' '. $bike['Year'];
-
-							//
-							// PRICE
-							// 
-							$bikePrice = trim($bike['Price']);
-
-							if (stripos($bikePrice, '$') === false && strlen($bikePrice) > 2) {
-								$bikePrice = '$' . $bikePrice;
-							}
-							else {
-								$bikePrice = 'ask';
-							}
-
-							// Photo (links to carousel popup)
-							echo 
-								'<td class="bike-header-cell w10p left">' . 
-									'<a href="#bikeDetailModal" class="portfolio-link" ' . 
-										'data-toggle="modal" '.
-										'data-name="' . $bikeName . '" '.
-										'data-price="' . $bikePrice . '" '.
-									'>' .
-										$firstPhoto . 
-									'</a>' .
-
-								'</td>';
-
-							// Make / Model
-							echo 
-								'<td class="left w10p pad-left-4 nowrap" data-sort="' . $bike['Make'] . $bike['Model'] . '">' . 
-									'<span class="text-bike-maker">' . $bike['Make'] . '</span>' . 
-									'<span class="text-sm">' . $bike['Model'] . '</span>' . 
-									'<span class="text-sm">' . $bike['Year'] . '</span>' . 
-								'</td>';
-
-							// Use
-							echo 
-								'<td class="left w5p" data-sort="' . $bike['Use'] .'">' . 
-									'<span class="text-sm">' . $bike['Use'] . '</span>' . 
-								'</td>';
-
-							// Size
-							echo 
-								'<td class="left w5p" data-sort="' . $bikeSize .'">' . 
-									'<span class="text-sm">' . $bikeSize . '</span>' . 
-								'</td>';
-
-							// Color
-							echo 
-								'<td class="left w5p hidden-xs" data-sort="' . $bike['Color'] .'">' . 
-									'<span class="text-sm">' . $bike['Color'] . '</span>' . 
-								'</td>';
-
-							// Gearing
-							echo 
-								'<td class="left w5p hidden-xs" data-sort="' . $bike['Gearing'] .'">' . 
-									'<span class="text-sm">' . $bike['Gearing'] . '</span>' . 
-								'</td>';
-
-							// Price
-							echo 
-								'<td class="left w5p" data-sort="' . $bikePrice . '">' . 
-									'<span class="text-md">' . $bikePrice . '</span>' . 
-								'</td>';
-						}
-					?>
-				</tbody>
-			</table>-->
+		<div class="col-lg-12 text-center">
+			<div class="container margin-top-20">
+				<div id="template-temp" class="hidden"></div>
+				<!-- data loads into div below -->
+				<div id="bikes"></div>
+			</div>
 		</div>
 	</div>
 
@@ -224,7 +95,6 @@ var postData = {};
 makeAjaxRequest(postData, 'POST', 'php/getBikeData.php')
 	.then(function(response) {
 		console.log(">>>> back to gallery.html");
-		console.log(response);
 		
 		if (response.result) {
 			// Clear target div and start filling it in w/ bikes
@@ -237,25 +107,65 @@ makeAjaxRequest(postData, 'POST', 'php/getBikeData.php')
 			//   Color, Country, Display, Gearing
 			//   Price, Size, Style, Use, Wheelsize
 			//   
-		console.log(bikes[0]);
+			console.log(bikes[0]);
 
-			for (var i = 0; i < bikes.length; i++) {
-				var bikeName = 
-					bikes[i].Make + ' ' + 
-					bikes[i].Model + (bikes[i].Year ? ' (' + bikes[i].Year + ')' : '');
+			$('#template-temp').load('templates/portfolio-item.html', function() {
+		
+				for (var i = 0; i < bikes.length; i++) {
+					// Create a unique element id to reference the element by
+					var bikeId = 'bike-' + i;
 
-				$bikeObject = $('<div>')
-					.addClass('fullsizeImage')
-					.attr('data-bikeid', i)
-					//.attr('data-color', cardColor)	// Color bar mapped to Category
-					//.addClass('w388 h240 relative thumbnail col-sm-12 col-md-6 col-lg-3');
-					.html(bikeName + '<hr>');
-					//.html('<img class="img-responsive center-img" src="images/' + imgArray[i] + '">');
+					var bikeName = 
+						bikes[i].Make + ' ' + 
+						bikes[i].Model + 
+						(bikes[i].Year ? ' (' + bikes[i].Year + ')' : '');
+
+					var bikeSize = bikes[i].Size + 
+						(bikes[i].Size ? ', ' + bikes[i].Use : '');
+
+					$('#item-template')
+						.clone()
+						.removeClass('hidden')
+						.attr('data-bikeid', i)
+						.attr('id', bikeId)
+						.appendTo('#bikes');
+
+					// Change attributes of the most recent dynamically created element
+					$('#bikes #' + bikeId).find('#bike-photo-main').attr('src', bikes[i].Photos[0]);
+
+					$('#bikes #' + bikeId).find('.portfolio-caption .bike-name')
+						.removeClass('loading')
+						.html(bikeName);
+
+					$('#bikes #' + bikeId).find('.portfolio-caption .bike-size')
+						.removeClass('loading')
+						.html(bikeSize);
+
+					$('#bikes #' + bikeId).find('.portfolio-caption .bike-price')
+						.removeClass('loading')
+						.html(bikes[i].Price);
+
 
 					
+					// $bikeObject = $('<div>')
+					// 	.addClass('fullsizeImage')
+					// 	.attr('data-bikeid', i)
+					// 	//.attr('data-color', cardColor)	// Color bar mapped to Category
+					// 	//.addClass('w388 h240 relative thumbnail col-sm-12 col-md-6 col-lg-3');
+					// 	.html(bikeName + '<hr>');
+					// 	//.html('<img class="img-responsive center-img" src="images/' + imgArray[i] + '">');
 
-				$('#bikes').append($bikeObject);
-			}
+						
+
+					// $('#bikes').append($bikeObject);
+				}
+
+
+					
+			});
+
+
+
 		}	
 		// Surface the error message
 		else {

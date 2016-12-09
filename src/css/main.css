@@ -180,17 +180,17 @@ img.bike-photo {
  *    Loading spinner  
  */
 .loading {
-	font-size: 10px;
+	font-size: 8px;
 	margin: 10px auto;
 	text-indent: -9999em;
-	width: 3em;
-	height: 3em;
+	width: 2em;
+	height: 2em;
 	border-radius: 58%;
 	background: #ffffff;
-	background: linear-gradient(to right, #DBD12C 10%, rgba(255, 252, 210, 0) 42%);
+	background: linear-gradient(to right, #4CA9DB 10%, rgba(255, 252, 210, 0) 42%);
 	position: relative;
-	-webkit-animation: load3 1.4s infinite linear;
-	animation: load3 1.4s infinite linear;
+	-webkit-animation: load3 1.2s infinite linear;
+	animation: load3 1.2s infinite linear;
 	-webkit-transform: translateZ(0);
 	-ms-transform: translateZ(0);
 	transform: translateZ(0);
@@ -395,7 +395,10 @@ button.close:hover {
 	color: #fff !important;
 }
 
-
+.bike-photo-container {
+	max-height: 200px;
+	overflow: hidden;
+}
 
 @media screen and (max-width: 767px) {
 	.bike-photo {

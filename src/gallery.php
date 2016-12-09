@@ -160,34 +160,8 @@ require_once 'php/getBikeData.php';
 								$firstPhoto = '<img src="' . trim($bike['Photos'][0]) . '" class="bike-photo">';
 							}
 
-							//
-							// SIZE
-							// 
-							$bikeSize = $bike['Size'];
-							if (is_numeric($bikeSize)) {
-								if ($bikeSize < 30) {
-									$bikeSize .= "in";
-								}
-								else {
-									$bikeSize .= "cm";
-								}
-							}
-
-							// Set up information for pop up modal
-							$bikeName =  $bike['Make'] . ' ' . $bike['Model'] . ' '. $bike['Year'];
-
-							//
-							// PRICE
-							// 
-							$bikePrice = trim($bike['Price']);
-
-							if (stripos($bikePrice, '$') === false && strlen($bikePrice) > 2) {
-								$bikePrice = '$' . $bikePrice;
-							}
-							else {
-								$bikePrice = 'ask';
-							}
-
+						
+						
 							// Photo (links to carousel popup)
 							echo 
 								'<td class="bike-header-cell w10p left">' . 
