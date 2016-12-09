@@ -12,7 +12,6 @@ Array.prototype.contains = function(value) {
 	return false;
 }
 Array.prototype.containsSubkeyValue = function(key, value) {
-	debugger;
 	for (var i = 0; i < this.length; i++) {
 		if (this[i][key] === value) {
 		  return true;
@@ -159,42 +158,64 @@ function getTodaysDate() {
  * @return {[type]}             [description]
  */
 function makeAjaxRequest(postData, requestType, requestUrl) {
+	ajaxResponse = {
+		result: false,
+		message: '',
+		payload: ''
+	};
+
 	var ajaxObject = { 
+		async: false,
 		type: requestType,
 		url: requestUrl,
 		data: postData,
-		// Success callback will fire even when coupled with an external $.done
-		success : function(response, status) {  // data, status, jqXHR
-			debugger;
-			if (status === 'success' && response) {
+		dataFilter: function (response) {
+    		if (response) {
+				// Success
 				if (isValidJson(response)) {
 					var jsonResponse = JSON.parse(response);
-					console.log(jsonResponse);
+					// Save current artist data in global cache
+					// CACHE['responseData'] = response;
+					return {
+						result: true,
+						message: "Data parsed successfully",
+						payload: jsonResponse
+					}
 				}
+				// Fail 
 				else {
-		  			alert("Response is not valid JSON");
+					console.warn("Response is not valid JSON");
+					return {
+						result: false,
+						message: "There was an error encountered while parsing the response",
+						payload: ""
+					}
 				}
-			 	// Save current artist data in global cache
-				CACHE['eventData'] = response;
-			 	return(response);
-		  	}
-		  	else {
-		  		alert("No data to display");
-		  	}
-		},
-		// if the request fails, deferred.reject() is called
-		error : function(code, message){
-		  	// Handle error here
-		  	// TODO:  change to jquery UI modal that autofades and has (X) button
-		  	return Error("Unable to load Event data =(");
-		}
-	}; // End ajaxObject 
+			}
+			else {
+				console.warn("No data received");
+				return {
+					result: false,
+					message: "There is no data to display",
+					payload: ""
+				}
+			}
+	    }, // End dataFilter
+	}; // End ajaxObject
 
-	console.log(ajaxObject);
-	debugger;
-
-	if (requestType == 'POST') {
-		ajaxObject.async = false;
-	}
-	return $.ajax(ajaxObject);
+	// if (requestType == 'POST') {
+	// 	ajaxObject.async = false;
+	// }
+	return $.ajax(ajaxObject)
+		// Success callback will fire even when coupled with an external $.done
+		.done(function(response, status, jqXHR) {
+    		console.log( "done success" );
+  		})
+		.fail(function(code, message) {
+			// Handle error with general failure message
+			console.warn("Error code: " + code + " / Message: " + message);
+		})
+		.always(function() {
+			// TODO:  fill in actions that should always fire
+		});
 } // End makeAjaxRequest()

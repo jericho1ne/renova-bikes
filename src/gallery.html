@@ -68,12 +68,14 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<!-- Bike Listings -->
 	<div class="row">
-	<!-- <div class="col-lg-12 text-center">> -->
-		<<!-- div class="container margin-top-20">
-			<table id="bikesForSale" class="border-collapse responsive nowrap border-bottom w100p">
+
+	<div class="col-lg-12 text-center">
+		<div class="container margin-top-20">
+			<div id="bikes"></div>
+			<!-- <table id="bikesForSale" class="border-collapse responsive nowrap border-bottom w100p">
 				<thead class="">
 					<?php 
 						$skipDisplay = [
@@ -202,9 +204,9 @@
 									'<span class="text-md">' . $bikePrice . '</span>' . 
 								'</td>';
 						}
-					?> -->
+					?>
 				</tbody>
-			</table>
+			</table>-->
 		</div>
 	</div>
 
@@ -219,8 +221,56 @@
 
 var postData = {};
 
-makeAjaxRequest(postData, 'POST', 'php/getBikeData.php');
+makeAjaxRequest(postData, 'POST', 'php/getBikeData.php')
+	.then(function(response) {
+		console.log(">>>> back to gallery.html");
+		console.log(response);
+		
+		if (response.result) {
+			// Clear target div and start filling it in w/ bikes
+			$('#bikes').empty();
+			var bikes = response.payload;
 
+			// Append imcoing data to DOM (fields below)
+			// 
+			// 	 Make, Model, Year, Notes, Photos
+			//   Color, Country, Display, Gearing
+			//   Price, Size, Style, Use, Wheelsize
+			//   
+		console.log(bikes[0]);
+
+			for (var i = 0; i < bikes.length; i++) {
+				var bikeName = 
+					bikes[i].Make + ' ' + 
+					bikes[i].Model + (bikes[i].Year ? ' (' + bikes[i].Year + ')' : '');
+
+				$bikeObject = $('<div>')
+					.addClass('fullsizeImage')
+					.attr('data-bikeid', i)
+					//.attr('data-color', cardColor)	// Color bar mapped to Category
+					//.addClass('w388 h240 relative thumbnail col-sm-12 col-md-6 col-lg-3');
+					.html(bikeName + '<hr>');
+					//.html('<img class="img-responsive center-img" src="images/' + imgArray[i] + '">');
+
+					
+
+				$('#bikes').append($bikeObject);
+			}
+		}	
+		// Surface the error message
+		else {
+			$('#bikes').html(response.message);
+		}
+
+		// create temporary object to hold HTML elements
+		var $bikeData = {};
+
+		
+
+	});
+
+	
+	
 
 // console.log(tableData);
 // console.log(headerRows);
