@@ -26,7 +26,9 @@
 	<!-- Datatable required script files -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<!-- <script type="text/javascript" src="js/jquery.dataTables.min.js"></script> -->
+
 	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/methods.js"></script>
 </head>
 
 <body>
@@ -48,7 +50,7 @@
 	</div>
 	
 	<!-- Bike Fit -->
-	<!-- <div class="container">
+	<div class="container">
 		<div class="row col-lg-12">
 			<div class="col-md-6 text-center">
 			
@@ -67,8 +69,14 @@
 				</select>
 			</div>
 		</div>
-	</div> -->
-	
+	</div>
+
+	<div class="container">
+		<div class="row col-lg-12 text-center">
+			<a href="#services" class="page-scroll btn btn-xl margin-top-30">Search</a>
+		</div>
+	</div>
+
 	<!-- Bike Listings -->
 	<div class="row">
 
@@ -89,133 +97,46 @@
 </body>
 
 <script>
+$(document).ready(function() {
+	/**
+	 * Generic call that sets interaction listeners
+	 */
+	function setListeners() {
+		// Modal X close button
+		$('.close-modal').click(function() {
+			$('#detail-modal').modal('toggle');
+		});
+	}
 
-var postData = {};
+	var postData = {};
+	makeAjaxRequest(postData, 'POST', 'php/getBikeData.php')
+		.then(function(response) {
+			// If response was received
+			if (response.result) {
+				// Clear target div and start filling it in w/ bikes
+				$('#bikes').empty();
+				var bikes = response.payload;
 
-makeAjaxRequest(postData, 'POST', 'php/getBikeData.php')
-	.then(function(response) {
-		console.log(">>>> back to gallery.html");
-		
-		if (response.result) {
-			// Clear target div and start filling it in w/ bikes
-			$('#bikes').empty();
-			var bikes = response.payload;
-
-			// Append imcoing data to DOM (fields below)
+				// Load html template, then inject data into cloned containers
+				$('#template-temp')
+					.load('templates/portfolio-item.html', function(){
+						// Then fill in the bike data with the ajax response payload
+						loadBikes(response.payload, '#bikes');
+					}); 
+			}	
+			// Else, surface the error message
+			else {
+				$('#bikes').html(response.message);
+			}
+		})
+		.then(function(data) {
+			// Generate dropdowns
 			// 
-			// 	 Make, Model, Year, Notes, Photos
-			//   Color, Country, Display, Gearing
-			//   Price, Size, Style, Use, Wheelsize
-			//   
-			console.log(bikes[0]);
+			// Set click listeners and such
+			setListeners();
+		});
 
-			$('#template-temp').load('templates/portfolio-item.html', function() {
-		
-				for (var i = 0; i < bikes.length; i++) {
-					// Create a unique element id to reference the element by
-					var bikeId = 'bike-' + i;
-
-					var bikeName = 
-						bikes[i].Make + ' ' + 
-						bikes[i].Model + 
-						(bikes[i].Year ? ' (' + bikes[i].Year + ')' : '');
-
-					var bikeSize = bikes[i].Size + 
-						(bikes[i].Size ? ', ' + bikes[i].Use : '');
-
-					$('#item-template')
-						.clone()
-						.removeClass('hidden')
-						.attr('data-bikeid', i)
-						.attr('id', bikeId)
-						.appendTo('#bikes');
-
-					// Change attributes of the most recent dynamically created element
-					$('#bikes #' + bikeId).find('#bike-photo-main').attr('src', bikes[i].Photos[0]);
-
-					$('#bikes #' + bikeId).find('.portfolio-caption .bike-name')
-						.removeClass('loading')
-						.html(bikeName);
-
-					$('#bikes #' + bikeId).find('.portfolio-caption .bike-size')
-						.removeClass('loading')
-						.html(bikeSize);
-
-					$('#bikes #' + bikeId).find('.portfolio-caption .bike-price')
-						.removeClass('loading')
-						.html(bikes[i].Price);
-
-
-					
-					// $bikeObject = $('<div>')
-					// 	.addClass('fullsizeImage')
-					// 	.attr('data-bikeid', i)
-					// 	//.attr('data-color', cardColor)	// Color bar mapped to Category
-					// 	//.addClass('w388 h240 relative thumbnail col-sm-12 col-md-6 col-lg-3');
-					// 	.html(bikeName + '<hr>');
-					// 	//.html('<img class="img-responsive center-img" src="images/' + imgArray[i] + '">');
-
-						
-
-					// $('#bikes').append($bikeObject);
-				}
-
-
-					
-			});
-
-
-
-		}	
-		// Surface the error message
-		else {
-			$('#bikes').html(response.message);
-		}
-
-		// create temporary object to hold HTML elements
-		var $bikeData = {};
-
-		
-
-	});
-
-	
-	
-
-// console.log(tableData);
-// console.log(headerRows);
-
-// $(document).ready(function() {
-// 	$('#bikesForSale').DataTable({
-// 		"bPaginate": true,
-// 		"pagingType": "simple",      // Prev and Next buttons only 
-// 		"pageLength": 20,
-// 		"initComplete": function () {
-// 		},
-// 		"lengthChange": false,
-// 		//  "lengthMenu": [[10, 20, 40, -1], [10, 20, 40, "All"]],
-// 		//"dom": '<"top"ifl<"clear">>rt<"bottom"p<"clear">>',
-// 		// f=search, p=pagination
-// 		"dom": '<"top"iflp>rt<"bottom"lp><"clear">',
-		
-// 		// Alternating row color
-// 		"asStripeClasses": [ 'even-bgcolor', 'odd-bgcolor' ],
-
-// 		"order": [[ 3, "desc" ]],
-// 		"aoColumnDefs": [
-// 			{ 'bSortable': true, 'aTargets': [ 1, 2, 3, 4 ] }
-// 		],
-// 		"autoWidth": false,
-// 		"language": {
-// 			//  "lengthMenu": "_MENU_ per pg",
-// 			"sSearch": "search by any field",     // Search input box label
-// 			"zeroRecords": "Nothing found.",
-// 			"info": "",  // Default:  "Page _PAGE_ of _PAGES_",
-// 			"infoEmpty": "No bikes available for sale",
-// 			"infoFiltered": ""
-// 		}
-// 	});
-// });
+}); // End document.ready
 </script>
 
 </html>
