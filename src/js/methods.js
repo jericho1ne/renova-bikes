@@ -4,11 +4,26 @@
  * @copyright 2016 Renova Bikes.  All rights reserved.
  */
 
+
+/**
+ * Pull in a reusable HTML template for each bike, clone it and fill it with 
+ * the incoming bike data
+ * @param  {array} 	bikes - Array of bike objects
+ * @param  {string} targetElement - Id of where this will get loaded into
+ */
+function loadBikesIntoTemplate(bikes, targetElement) {	
+	// Load html template, then inject data into cloned containers
+	$('#template-temp')
+		.load('templates/portfolio-item.html', function(){
+			// Then fill in the bike data with the ajax response payload
+			loadBikes(bikes, targetElement);
+		});
+} // End loadBikesIntoTemplate()
+
 /**
  * Loads given array's content into the specific dom selector
- * @param  {array} bikes Array of bike objects
- * @param  {string} targetElement Id of where this will get loaded into
- * @return nothing
+ * @param  {array} 	bikes - Array of bike objects
+ * @param  {string} targetElement - Id of where this will get loaded into
  */
 function loadBikes(bikes, targetElement) {	
 	console.log(" >> loading bikes into " + targetElement);
@@ -40,7 +55,7 @@ function loadBikes(bikes, targetElement) {
 			.attr('data-bikeid', i)
 			.attr('id', bikeId)
 			.appendTo(targetElement);
-			
+
 		// Change attributes of the most recent dynamically created element
 		$(targetElement + ' #' + bikeId).find('#bike-photo-main').attr('src', bike.Photos[0]);
 

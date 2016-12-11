@@ -373,7 +373,6 @@ select {
 .modal-content {
 	width: 100% !important;
 	min-height: 500px !important;
-	max-width: 768px !important;
 	border-radius: 0px !important;
 }
 .modal-body {

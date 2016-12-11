@@ -73,7 +73,7 @@
 
 	<div class="container">
 		<div class="row col-lg-12 text-center">
-			<a href="#services" class="page-scroll btn btn-xl margin-top-30">Search</a>
+			<span id="searchBikesBtn" class="page-scroll btn btn-xl margin-top-30">Search</span>
 		</div>
 	</div>
 
@@ -82,29 +82,44 @@
 
 		<div class="col-lg-12 text-center">
 			<div class="container margin-top-20">
-				<div id="template-temp" class="hidden"></div>
 				<!-- data loads into div below -->
 				<div id="bikes"></div>
 			</div>
 		</div>
 	</div>
+	
+	<!-- Placeholders for HTML templates -->
+	<div id="template-temp" class="hidden"></div>
+	<div id="modal-temp" class="hidden"></div>
 
 	<!-- Bootstrap Core JavaScript -->
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	
 	<!-- Bootstrap Theme JavaScript -->
-  <script src="js/agency.min.js"></script>
+	<script src="js/agency.min.js"></script>
 </body>
 
 <script>
 $(document).ready(function() {
+	window.bikes = [];
+
+	// Load bootstrap modal into DOM
+	$('#modal-temp')
+		.load('templates/detail-modal.html', function() {
+			console.log("DONE LOADING MODAL.");
+			// Callback that immediately fires after the load is completed
+		});
 	/**
 	 * Generic call that sets interaction listeners
 	 */
 	function setListeners() {
+		$('#searchBikesBtn').click(function() {
+			$('#bike-detail-modal').modal('toggle');
+		});
+
 		// Modal X close button
 		$('.close-modal').click(function() {
-			$('#detail-modal').modal('toggle');
+			$('#bike-detail-modal').modal('toggle');
 		});
 	}
 
@@ -113,16 +128,11 @@ $(document).ready(function() {
 		.then(function(response) {
 			// If response was received
 			if (response.result) {
-				// Clear target div and start filling it in w/ bikes
+				// Clear target div
 				$('#bikes').empty();
-				var bikes = response.payload;
-
-				// Load html template, then inject data into cloned containers
-				$('#template-temp')
-					.load('templates/portfolio-item.html', function(){
-						// Then fill in the bike data with the ajax response payload
-						loadBikes(response.payload, '#bikes');
-					}); 
+				// Make bike data global object, import template and clone it
+				window.bikes = response.payload;
+				loadBikesIntoTemplate(window.bikes, '#bikes');
 			}	
 			// Else, surface the error message
 			else {
