@@ -58,7 +58,9 @@
 			</div>
 			<div class="col-md-6 text-center">
 				Inseam (crotch to floor) 
-				<select id="inseam-dropdown" class="select-dropdown"></select>
+				<select id="inseam-dropdown" class="select-dropdown">
+					<option selected value="0">–––</option>
+				</select>
 			</div>
 		</div>
 	</div>
@@ -123,12 +125,12 @@ $(document).ready(function() {
 	for (var i = inseamMin; i <= inseamMax; i++) {
 		selected = '';
 		// Default to the most common inseam
-		if (i == 32) {
-			selected = ' selected';
-		}
+		// if (i == 32) {
+		// 	selected = ' selected';
+		// }
 
 		optionHtml = 
-			'<option value="' + i + '" ' + selected + '>' +
+			'<option value="' + i + '">' +
 				i +
 			'</option>';
 
@@ -148,8 +150,11 @@ $(document).ready(function() {
 	 */
 	function setListeners() {
 		$('#searchBikesBtn').on('click', function() {
-			var inseam = $('#inseam-dropdown').val();
+			var inseam = parseInt($('#inseam-dropdown').val());
 
+			if (inseam == 0) { 
+				return;
+			}
 			// Convert inseam fron in to cm to get saddle height
 			var saddleHeight = inseam * .96 * 2.54;
 			var bikeResults = [];
