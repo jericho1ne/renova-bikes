@@ -50,9 +50,9 @@
 	</div>
 	
 	<!-- Bike Fit Settings -->
-<!-- 	<div class="container">
+	<div class="container">
 		<div class="row col-lg-12">
-			<div class="col-md-6 text-center">
+			<div class="hidden col-md-6 text-center">
 				Height 	
 				<select id="height-dropdown" class="select-dropdown"></select>
 			</div>
@@ -61,14 +61,14 @@
 				<select id="inseam-dropdown" class="select-dropdown"></select>
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 	<!-- Search button -->
-	<!-- <div class="container">
+	<div class="container">
 		<div class="row col-lg-12 text-center">
 			<span id="searchBikesBtn" class="page-scroll btn btn-xl margin-top-30">Search</span>
 		</div>
-	</div> -->
+	</div>
 
 	<!-- Bike Listings -->
 	<div class="row">
@@ -94,6 +94,48 @@
 
 <script>
 $(document).ready(function() {
+	// 1 in = 2.54cm
+	var heightMin = 48;  // 4 ft
+	var heightMax = 84;   // 7 ft
+	var feet;
+	var inches;
+	var optionHtml;
+
+	for (var i = heightMin; i <= heightMax; i++) {
+		feet = Math.floor(i / 12);
+		inches = (i % 12) != 0
+			? i % 12 + ' in'
+			: '';
+
+		optionHtml = 
+			'<option value="' + i + '">' +
+				feet + 'ft ' + inches +
+			'</option>';
+
+		$('#height-dropdown').append(optionHtml);	        	
+	}
+
+	// Inseam min / max
+	var inseamMin = 20;
+	var inseamMax = 38;
+	var selected = '';
+
+	for (var i = inseamMin; i <= inseamMax; i++) {
+		selected = '';
+		// Default to the most common inseam
+		if (i == 32) {
+			selected = ' selected';
+		}
+
+		optionHtml = 
+			'<option value="' + i + '" ' + selected + '>' +
+				i +
+			'</option>';
+
+		$('#inseam-dropdown').append(optionHtml);	        	
+	}
+
+	
 	window.bikes = [];
 
 	// Load bootstrap modal into DOM
@@ -106,7 +148,46 @@ $(document).ready(function() {
 	 */
 	function setListeners() {
 		$('#searchBikesBtn').on('click', function() {
-			$('#bikeDetails').modal('toggle');
+			var inseam = $('#inseam-dropdown').val();
+
+			// Convert inseam fron in to cm to get saddle height
+			var saddleHeight = inseam * .96 * 2.54;
+			var bikeResults = [];
+
+			for (var i = 0; i < window.bikes.length; i++) {
+				// If road, subtract 18cm (+/-2cm) to get frame size
+				if (bikes[i].Use.toLowerCase() == "road") {
+					if (bikes[i].SizeInCm < (saddleHeight - 16) &&
+						bikes[i].SizeInCm > (saddleHeight - 20)
+					) {
+						console.log(bikes[i]);
+						bikeResults.push(bikes[i]);
+					}
+				}
+				// If mtn, subtract 24cm (+/-2cm) to get frame size
+				else if (bikes[i].Use.toLowerCase() == "mtn") {
+					if (bikes[i].SizeInCm < (saddleHeight - 22) &&
+						bikes[i].SizeInCm > (saddleHeight - 26)
+					) {
+						console.log(bikes[i]);
+						bikeResults.push(bikes[i]);
+					}
+				}
+				// Else, go with -20cm (?)
+				else {
+					if (bikes[i].SizeInCm < (saddleHeight - 20) &&
+						bikes[i].SizeInCm > (saddleHeight - 28)
+					) {
+						console.log(bikes[i]);
+						bikeResults.push(bikes[i]);
+					}
+				}
+			} // End for loop searching for matching frame sizes
+
+			$('#bikes').empty();
+			// Make bike data global object, import template and clone it
+			window.bikeResults = bikeResults;
+			loadBikesIntoTemplate(window.bikeResults, '#bikes');
 		});
 	}
 
