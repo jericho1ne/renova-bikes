@@ -209,7 +209,7 @@ function makeAjaxRequest(postData, requestType, requestUrl) {
 	return $.ajax(ajaxObject)
 		// Success callback will fire even when coupled with an external $.done
 		.done(function(response, status, jqXHR) {
-    		console.log( "done success" );
+    		// console.log( "done success" );
   		})
 		.fail(function(code, message) {
 			// Handle error with general failure message

@@ -49,37 +49,29 @@
 		</div>
 	</div>
 	
-	<!-- Bike Fit -->
-	<div class="container">
+	<!-- Bike Fit Settings -->
+<!-- 	<div class="container">
 		<div class="row col-lg-12">
 			<div class="col-md-6 text-center">
-			
 				Height 	
-	
-				<select id="height-dropdown" class="select-dropdown">
-					
-				</select>
-
+				<select id="height-dropdown" class="select-dropdown"></select>
 			</div>
 			<div class="col-md-6 text-center">
 				Inseam (crotch to floor) 
-				
-				<select id="inseam-dropdown" class="select-dropdown">
-				
-				</select>
+				<select id="inseam-dropdown" class="select-dropdown"></select>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="container">
+	<!-- Search button -->
+	<!-- <div class="container">
 		<div class="row col-lg-12 text-center">
 			<span id="searchBikesBtn" class="page-scroll btn btn-xl margin-top-30">Search</span>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Bike Listings -->
 	<div class="row">
-
 		<div class="col-lg-12 text-center">
 			<div class="container margin-top-20">
 				<!-- data loads into div below -->
@@ -88,9 +80,10 @@
 		</div>
 	</div>
 	
-	<!-- Placeholders for HTML templates -->
+	<!-- Placeholder for bike thumbnail HTML template -->
 	<div id="template-temp" class="hidden"></div>
-	<div id="modal-temp" class="hidden"></div>
+	<!-- Placeholder for bootstrap bike details modal (no need for `hidden` class) -->
+	<div id="modal-temp" class=""></div>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -106,24 +99,20 @@ $(document).ready(function() {
 	// Load bootstrap modal into DOM
 	$('#modal-temp')
 		.load('templates/detail-modal.html', function() {
-			console.log("DONE LOADING MODAL.");
 			// Callback that immediately fires after the load is completed
 		});
 	/**
 	 * Generic call that sets interaction listeners
 	 */
 	function setListeners() {
-		$('#searchBikesBtn').click(function() {
-			$('#bike-detail-modal').modal('toggle');
-		});
-
-		// Modal X close button
-		$('.close-modal').click(function() {
-			$('#bike-detail-modal').modal('toggle');
+		$('#searchBikesBtn').on('click', function() {
+			$('#bikeDetails').modal('toggle');
 		});
 	}
 
-	var postData = {};
+	var postData = {
+		// Pass in any required parameters
+	};
 	makeAjaxRequest(postData, 'POST', 'php/getBikeData.php')
 		.then(function(response) {
 			// If response was received
@@ -141,7 +130,7 @@ $(document).ready(function() {
 		})
 		.then(function(data) {
 			// Generate dropdowns
-			// 
+
 			// Set click listeners and such
 			setListeners();
 		});

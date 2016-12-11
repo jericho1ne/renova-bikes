@@ -1,34 +1,72 @@
 <!-- Detail Modal (hidden by default) -->
-<div class="bike-detail-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <!-- Project Details Go Here -->
-                            <h2>Project Name</h2>
-                            <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                            <img class="img-responsive img-centered" src="img/portfolio/roundicons-free.png" alt="">
-                            <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                            <p>
-                                <strong>Want these icons in this portfolio item sample?</strong>You can download 60 of them for free, courtesy of <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">RoundIcons.com</a>, or you can purchase the 1500 icon set <a href="https://getdpd.com/cart/hoplink/18076?referrer=bvbo4kax5k8ogc">here</a>.</p>
-                            <ul class="list-inline">
-                                <li>Date: July 2014</li>
-                                <li>Client: Round Icons</li>
-                                <li>Category: Graphic Design</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="detail-modal modal fade" id="bikeDetails" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<!-- modal-content -->
+		<div class="modal-content">
+			<div class="close-modal" data-dismiss="modal">
+				<div class="lr">
+					<div class="rl">
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-lg-offset-2">
+						<div class="modal-body">
+
+							<!-- Model/Make -->
+							<h2 id="bike-title"></h2>
+							<p id="bike-subtitle" class="item-intro"></p>
+
+							<!-- Photos -->
+							<img id="bike-image" 
+								class="img-responsive img-centered" 
+								src="./img/photo-not-available.jpg" alt="">
+	
+							<!-- Use / Color / Country of Origin -->							
+							<ul class="list-inline">
+								<li>Use: <span id="bike-use"></span></li>
+								<li>Wheel Size: <span id="bike-wheelsize"></span></li>
+								<li>Color: <span id="bike-color"></span></li>
+								<li>Origin: <span id="bike-country"></span></li>
+							</ul>
+
+							<!-- More Details -->							
+							<p id="bike-notes"></p>
+							<!-- CLOSE MODAL BUTTON -->
+							<button type="button" 
+								class="btn btn-primary" 
+								data-dismiss="modal"
+							>
+								<i class="fa fa-times"></i> Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		<!-- End modal-content -->
+	</div>
 </div>
+
+
+<!-- Modal listeners -->
+<script>
+$(function () {
+	// Actions triggered when modal is Opened
+	$('#bikeDetails').on('shown.bs.modal', function (e) {
+		console.log('yea!');
+	})
+
+	// Actions triggered on Close (eg: "x" button, ESC key, "Cancel")
+	$('#bikeDetails').on('hidden.bs.modal', function() {
+		// Reset modal fields
+		$("#bikeDetails #bike-title").html('');
+		$("#bikeDetails #bike-subtitle").html('');
+		$("#bikeDetails #bike-image").attr('src', './img/photo-not-available.jpg');
+		$("#bikeDetails #bike-notes").html('');
+	});
+});
+</script>

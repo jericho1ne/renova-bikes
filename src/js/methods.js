@@ -26,9 +26,7 @@ function loadBikesIntoTemplate(bikes, targetElement) {
  * @param  {string} targetElement - Id of where this will get loaded into
  */
 function loadBikes(bikes, targetElement) {	
-	console.log(" >> loading bikes into " + targetElement);
-
-	// Append imcoing data to DOM (fields below)
+	// Append incoming data to DOM (fields below)
 	// 
 	// 	 Make, Model, Year, Notes, Photos
 	//   Color, Country, Display, Gearing
@@ -71,4 +69,19 @@ function loadBikes(bikes, targetElement) {
 			.removeClass('loading')
 			.html(bike.Price);
 	} // End for loop through all bike items
+
+	// If detail modal is clicked, need to load custom data
+	$('.portfolio-item').on('click', function() {
+		var bike = window.bikes[$(this).data('bikeid')];
+		$("#bikeDetails #bike-title").html(bike.Make + ' ' + bike.Model);
+		$("#bikeDetails #bike-subtitle").html(bike.Price);
+		$("#bikeDetails #bike-image").attr('src', bike.Photos[0]);
+		$("#bikeDetails #bike-notes").html(bike.Notes);
+
+		// Details list items
+		$("#bikeDetails #bike-use").html(bike.Use);
+		$("#bikeDetails #bike-wheelsize").html(bike.Wheelsize);
+		$("#bikeDetails #bike-color").html(bike.Color);
+		$("#bikeDetails #bike-country").html(bike.Country);
+	}); 	
 }
