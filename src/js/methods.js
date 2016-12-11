@@ -37,7 +37,7 @@ function loadBikes(bikes, targetElement) {
 		bike = bikes[i];
 
 		// Create a unique element id to reference the element by
-		var bikeId = 'bike-' + i;
+		var bikeId = 'bike-' + bikes[i]['Id'];
 
 		var bikeName = 
 			bike.Make + ' ' + 
@@ -50,7 +50,7 @@ function loadBikes(bikes, targetElement) {
 		$('#item-template')
 			.clone()
 			.removeClass('hidden')
-			.attr('data-bikeid', i)
+			.attr('data-bikeid', bikes[i]['Id'])
 			.attr('id', bikeId)
 			.appendTo(targetElement);
 
@@ -72,7 +72,9 @@ function loadBikes(bikes, targetElement) {
 
 	// If detail modal is clicked, need to load custom data
 	$('.portfolio-item').on('click', function() {
-		var bike = window.bikes[$(this).data('bikeid')];
+		// Search for the bike's id in the global array 
+		var bike = window.bikes.pluckIfKeyValueExists('Id', $(this).data('bikeid'))[0];
+
 		$("#bikeDetails #bike-title").html(bike.Make + ' ' + bike.Model);
 		$("#bikeDetails #bike-subtitle").html(bike.Price);
 		$("#bikeDetails #bike-image").attr('src', bike.Photos[0]);

@@ -10,7 +10,7 @@ $url = 'https://docs.google.com/spreadsheets/d/1ZK1qCPPpWJXGelLctQIKGvrdPoldCJF7
 	'?tqx=out:' . $urlType . '&gid=0';
 
 // Local, for testing
-$url = "bike-data.html";
+//$url = "bike-data.html";
 
 // Grab raw table data
 $rawData =  file_get_contents($url);
