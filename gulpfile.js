@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var del = require('del');
 var less = require('gulp-less');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
@@ -15,6 +16,8 @@ var path = {
     bootstrap: 'node_modules/bootstrap',
 };
 
+var tempResourcePath = path.dest + '/resources';
+
 // Banner
 var banner = ['/*!\n',
     ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
@@ -28,7 +31,7 @@ gulp.task('less', function() {
     return gulp.src('src/less/agency.less')
         .pipe(less())
         .pipe(header(banner, { pkg: pkg }))
-        .pipe(gulp.dest(path.src + '/css'))
+        .pipe(gulp.dest(tempResourcePath + '/css'))
         .pipe(browserSync.reload({
             stream: true
         }))
@@ -36,14 +39,21 @@ gulp.task('less', function() {
 
 // Minify compiled CSS - from source to dest
 gulp.task('minify-css', ['less'], function() {
-    return gulp.src(path.src + '/css/agency.css')
+    return gulp.src(tempResourcePath + '/css/agency.css')
         .pipe(cleanCSS({ compatibility: 'ie8' }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(path.dest + '/css'))
+        
         .pipe(browserSync.reload({
             stream: true
         }))
 });
+
+// Clean temporary css resources directory
+gulp.task('remove-css', function() {
+	del([tempResourcePath + '/css'])
+});
+
 
 // Minify JS
 gulp.task('minify-js', function() {
@@ -87,7 +97,13 @@ gulp.task('copy', function() {
 })
 
 // Run everything
-gulp.task('default', ['less', 'minify-css', 'minify-js', 'copy']);
+gulp.task('default', [
+	'less', 
+	'minify-css', 
+	'remove-css', 
+	'minify-js', 
+	'copy'
+]);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
