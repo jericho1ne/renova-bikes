@@ -2,4 +2,4 @@
 .tmp/
 app/
 node_modules/
-renova.sublime-workspace
+*.sublime-workspace

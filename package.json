@@ -6,7 +6,10 @@
   "dependencies": {
     "del": "^2.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.18.5",
+    "gulp-watch": "^4.3.11"
+  },
   "scripts": {
     "test": "gulp"
   },
