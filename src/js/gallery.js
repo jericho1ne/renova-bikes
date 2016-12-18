@@ -1,8 +1,52 @@
 /**
- * @file methods.js Builds pretty DOM elements and fills them with data
+ * @file gallery.js Builds pretty DOM elements and fills them with data
  * @author Mihai Peteu
  * @copyright 2016 Renova Bikes.  All rights reserved.
  */
+
+
+function generateInseamSizes() {
+	// 1 in = 2.54cm
+	var heightMin = 48;  // 4 ft
+	var heightMax = 84;   // 7 ft
+	var feet;
+	var inches;
+	var optionHtml;
+
+	for (var i = heightMin; i <= heightMax; i++) {
+		feet = Math.floor(i / 12);
+		inches = (i % 12) != 0
+			? i % 12 + ' in'
+			: '';
+
+		optionHtml = 
+			'<option value="' + i + '">' +
+				feet + 'ft ' + inches +
+			'</option>';
+
+		$('#height-dropdown').append(optionHtml);	        	
+	}
+
+	// Inseam min / max
+	var inseamMin = 20;
+	var inseamMax = 38;
+	var selected = '';
+
+	for (var i = inseamMin; i <= inseamMax; i++) {
+		selected = '';
+		// Default to the most common inseam
+		// if (i == 32) {
+		// 	selected = ' selected';
+		// }
+
+		optionHtml = 
+			'<option value="' + i + '">' +
+				i +
+			'</option>';
+
+		$('#inseam-dropdown').append(optionHtml);	        	
+	}
+} // End generateInseamSizes()
 
 function generateBikeTypes(bikes, targetElement) {
 	var uses = bikes.unique('Use');
@@ -20,11 +64,11 @@ function generateBikeTypes(bikes, targetElement) {
 
 		var $useInput = $('<input>')
 			.attr('type', 'checkbox')
-			.attr('id', 'bikeUse-' + bikeUse)
+			.attr('id', bikeUse)
 			.addClass('styled');
 
 		var $useLabel = $('<label>')
-			.attr('for', 'bikeUse-' + bikeUse)
+			.attr('for', bikeUse)
 			.html(bikeUse);
 
 		$bikeUseDiv.append($useInput);
@@ -87,7 +131,7 @@ function loadBikes(bikes, targetElement) {
 			.appendTo(targetElement);
 
 		// Change attributes of the most recent dynamically created element
-		$(targetElement + ' #' + bikeId).find('#bike-photo-main').attr('src', bike.Photos[0]);
+		// $(targetElement + ' #' + bikeId).find('#bike-photo-main').attr('src', bike.Photos[0]);
 
 		$(targetElement + ' #' + bikeId).find('.portfolio-caption .bike-name')
 			.removeClass('loading')

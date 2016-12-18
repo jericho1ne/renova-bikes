@@ -35,9 +35,26 @@ Array.prototype.unique = function(key) {
 	return arr; 
 }
 Array.prototype.pluckIfKeyValueExists = function(key, value) {
-  return this.filter(function(eachObject) {
-	 return eachObject[key] == value;
-  });
+	return this.filter(function(eachObject) {
+		return eachObject[key] == value.toLowerCase();
+	});
+}
+
+Array.prototype.deleteKeyValuePair = function(key, value) {
+    for (var i = 0; i < this.length; ++i) {
+        if (this[i].key == value) {
+            this.splice(i, 1);
+            return;
+        }
+    }
+}
+
+function intersect(a, b) {
+    var t;
+    if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
+    return a.filter(function (e) {
+        if (b.indexOf(e) !== -1) return true;
+    });
 }
 
 function isEmptyObject(obj) {

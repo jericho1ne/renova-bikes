@@ -23,13 +23,6 @@
 	<link href="css/main.css" rel="stylesheet">
 	<link href="css/custom-inputs.css" rel="stylesheet">
 	<!-- <link href="css/datatables.css" rel="stylesheet"> -->
-	
-	<!-- Datatable required script files -->
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<!-- <script type="text/javascript" src="js/jquery.dataTables.min.js"></script> -->
-
-	<script type="text/javascript" src="js/common.js"></script>
-	<script type="text/javascript" src="js/methods.js"></script>
 </head>
 
 <body>
@@ -99,57 +92,27 @@
 	<!-- Placeholder for bootstrap bike details modal (no need for `hidden` class) -->
 	<div id="modal-temp" class=""></div>
 
+
+	<!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
 	<!-- Bootstrap Core JavaScript -->
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	
 	<!-- Bootstrap Theme JavaScript -->
 	<script src="js/agency.min.js"></script>
+
+	<!-- Required logic -->
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/gallery.js"></script>
 </body>
 
 <script>
 $(document).ready(function() {
-	// 1 in = 2.54cm
-	var heightMin = 48;  // 4 ft
-	var heightMax = 84;   // 7 ft
-	var feet;
-	var inches;
-	var optionHtml;
 
-	for (var i = heightMin; i <= heightMax; i++) {
-		feet = Math.floor(i / 12);
-		inches = (i % 12) != 0
-			? i % 12 + ' in'
-			: '';
+	// Add all possible inseam sizes to the dropdown
+	generateInseamSizes();
 
-		optionHtml = 
-			'<option value="' + i + '">' +
-				feet + 'ft ' + inches +
-			'</option>';
-
-		$('#height-dropdown').append(optionHtml);	        	
-	}
-
-	// Inseam min / max
-	var inseamMin = 20;
-	var inseamMax = 38;
-	var selected = '';
-
-	for (var i = inseamMin; i <= inseamMax; i++) {
-		selected = '';
-		// Default to the most common inseam
-		// if (i == 32) {
-		// 	selected = ' selected';
-		// }
-
-		optionHtml = 
-			'<option value="' + i + '">' +
-				i +
-			'</option>';
-
-		$('#inseam-dropdown').append(optionHtml);	        	
-	}
-
-	
 	window.bikes = [];
 
 	// Load bootstrap modal into DOM
@@ -163,21 +126,32 @@ $(document).ready(function() {
 	function setListeners() {
 		$('#searchBikesBtn').on('click', function() {
 			var inseam = parseInt($('#inseam-dropdown').val());
+			var checkboxesChecked = $('#bikeUseContainer .checkbox input').length;
+			
+			// Start out with an empty results array
+			window.bikeResults = [];
 
-			if (inseam == 0) { 
+			// Nothing on the UI is changed, then no work to be done
+			if (inseam == 0 && checkboxesChecked == 0) { 
 				return;
 			}
+			// No inseam value selected, but we'll need the full dataset to 
+			// subtract from based on `Use` checkboxes
+			else if (inseam == 0 && checkboxesChecked > 0) {
+				window.bikeResults = window.bikes;
+			}
+
 			// Convert inseam fron in to cm to get saddle height
 			var saddleHeight = inseam * .96 * 2.54;
-			var bikeResults = [];
-
+			
+			// Trim search results on Inseam size
 			for (var i = 0; i < window.bikes.length; i++) {
 				// If road, subtract 16-18cm to get frame size
 				if (bikes[i].Use.toLowerCase() == "road") {
 					if (bikes[i].SizeInCm < (saddleHeight - 16) &&
 						bikes[i].SizeInCm > (saddleHeight - 18)
 					) {
-						bikeResults.push(bikes[i]);
+						window.bikeResults.push(bikes[i]);
 					}
 				}
 				// If mtn, subtract 24cm to get frame size
@@ -185,7 +159,7 @@ $(document).ready(function() {
 					if (bikes[i].SizeInCm < (saddleHeight - 22) &&
 						bikes[i].SizeInCm > (saddleHeight - 24)
 					) {
-						bikeResults.push(bikes[i]);
+						window.bikeResults.push(bikes[i]);
 					}
 				}
 				// Else, go with -20cm (?)
@@ -193,14 +167,37 @@ $(document).ready(function() {
 					if (bikes[i].SizeInCm < (saddleHeight - 20) &&
 						bikes[i].SizeInCm > (saddleHeight - 24)
 					) {
-						bikeResults.push(bikes[i]);
+						window.bikeResults.push(bikes[i]);
 					}
 				}
-			} // End for loop searching for matching frame sizes
+			} // End for loop searching for matching frame sizes based on inseam
+
+			// Trim results further on `Use` checkboxes
+			$('#bikeUseContainer .checkbox input').each(function() { 
+				var $thisBox = $(this);
+
+				// Look for unchecked checkboxes, subtracting those results
+				// from what we have left thus far
+				if (!$thisBox.is(':checked')) {
+					var bikeUse = $thisBox.attr('id');
+					var delTheseBikes = window.bikes.pluckIfKeyValueExists('Use', bikeUse);
+					var bikeIds = delTheseBikes.unique('Id');
+
+					for (var i = 0; i < bikeIds.length; i++) {
+						// window.bikeResults.deleteKeyValuePair('Id', bikeIds[i]);
+
+						for (var j = window.bikeResults.length - 1; j >= 0; j--) {
+							// Check each array item for the specific key/value pair
+							if (window.bikeResults[j].Id == bikeIds[i]) {
+								window.bikeResults.splice(j, 1);
+							}
+						}
+					}
+				}
+			});
 
 			$('#bikes').empty();
-			// Make bike data global object, import template and clone it
-			window.bikeResults = bikeResults;
+			// Load global bike results, import template, clone it
 			loadBikesIntoTemplate(window.bikeResults, '#bikes');
 		});
 	}

@@ -7,7 +7,10 @@ var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
+var php = require('gulp-connect-php');
+
 var pkg = require('./package.json');
+
 
 var path = {
 	src: 'src/',
@@ -68,7 +71,6 @@ gulp.task('minify-js', function() {
 
 // Copy vendor libraries from /node_modules into /vendor
 gulp.task('copy', function() {
-	console.log(" >>> copy");
 	gulp.src([path.bootstrap + '/dist/**/*', '!**/npm.js', '!**/bootstrap-theme.*', '!**/*.map'])
 		.pipe(gulp.dest(path.dest + 'vendor/bootstrap'))
 
@@ -96,6 +98,10 @@ gulp.task('copy', function() {
 	gulp.src([path.src + 'img/*']).pipe(gulp.dest(path.dest + 'img'))
 })
 
+gulp.task('php', function() {
+    php.server({ base: 'build', port: 8010, keepalive: true});
+});
+
 // Run everything
 gulp.task('default', [
 	'less', 
@@ -106,7 +112,7 @@ gulp.task('default', [
 ]);
 
 // Configure the bSync task to run from the destination folder
-gulp.task('bSync', function() {
+gulp.task('bSync', ['php'], function() {
 	bSync.init({
 		server: {
 			baseDir: 'app/',
