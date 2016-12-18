@@ -4,6 +4,38 @@
  * @copyright 2016 Renova Bikes.  All rights reserved.
  */
 
+function generateBikeTypes(bikes, targetElement) {
+	var uses = bikes.unique('Use');
+
+	// Clear existing content, if any
+	$(targetElement).empty();
+
+	for (var i = 0; i < uses.length; i++) {
+		var bikeUse = uses[i];
+
+		console.log(bikeUse);
+
+		var $bikeUseDiv = $('<div>')
+			.addClass('checkbox checkbox-info checkbox-circle');
+
+		var $useInput = $('<input>')
+			.attr('type', 'checkbox')
+			.attr('id', 'bikeUse-' + bikeUse)
+			.addClass('styled');
+
+		var $useLabel = $('<label>')
+			.attr('for', 'bikeUse-' + bikeUse)
+			.html(bikeUse);
+
+		$bikeUseDiv.append($useInput);
+		$bikeUseDiv.append($useLabel);
+		
+				// <input id="checkbox2" class="styled" type="checkbox">
+				// <label for="checkbox2">Inline Two</label>
+
+		$(targetElement).append($bikeUseDiv);
+	} // Loop through bike 'Use' values, creating checkboxes
+} 
 
 /**
  * Pull in a reusable HTML template for each bike, clone it and fill it with 

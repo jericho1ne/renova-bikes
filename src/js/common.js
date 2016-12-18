@@ -5,7 +5,7 @@
  */
 Array.prototype.contains = function(value) {
 	for (var i = 0; i < this.length; i++) {
-		if (this[i] === value) {
+		if (this[i].toLowerCase() === value.toLowerCase()) {
 		  return true;
 		}
 	}
@@ -21,9 +21,15 @@ Array.prototype.containsSubkeyValue = function(key, value) {
 }
 Array.prototype.unique = function(key) {
 	var arr = [];
+	var stringValue = '';
+
 	for (var i = 0; i < this.length; i++) {
 		if (!arr.contains(this[i][key])) {
-			arr.push(this[i][key]);
+			stringValue = this[i][key].toString().trim();
+
+			if (stringValue !== '') {
+				arr.push(this[i][key].toLowerCase());	
+			}
 		}
 	}
 	return arr; 

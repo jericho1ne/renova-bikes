@@ -57,7 +57,7 @@
 				Height 	
 				<select id="height-dropdown" class="select-dropdown"></select>
 			</div>
-			<div class="col-md-6 text-center">
+			<div class="col-lg-12 text-center pad-top-30">
 				<h3>Inseam (crotch to floor)</h3>
 				<select id="inseam-dropdown" class="select-dropdown">
 					<option selected value="0">–––</option>
@@ -68,24 +68,14 @@
 
 	<!-- Bike Use Checkboxes -->
 	<div class="container">
-		<div class="row col-lg-12">
-			<div class="col-md-6 text-center checkbox checkbox-inline">
-
-				<h3>Use</h3>
-
-				<div class="checkbox checkbox-info checkbox-circle">
-					<input id="checkbox1" class="styled" type="checkbox">
-					<label for="checkbox1">Inline One</label>
-				</div>
-				
-				<div class="checkbox checkbox-info checkbox-circle">
-					<input id="checkbox2" class="styled" type="checkbox">
-					<label for="checkbox2">Inline Two</label>
-				</div>
-
-			</div>
+		<div class="row col-lg-12 text-center pad-top-30">
+			<h3>Use</h3>
 		</div>
-	</di
+		
+		<div class="row col-lg-12 text-center">
+			<div class="checkbox" id="bikeUseContainer"></div>
+		</div>
+	</div>
 
 	<!-- Search button -->
 	<div class="container">
@@ -182,18 +172,18 @@ $(document).ready(function() {
 			var bikeResults = [];
 
 			for (var i = 0; i < window.bikes.length; i++) {
-				// If road, subtract 18cm (+/-2cm) to get frame size
+				// If road, subtract 16-18cm to get frame size
 				if (bikes[i].Use.toLowerCase() == "road") {
 					if (bikes[i].SizeInCm < (saddleHeight - 16) &&
-						bikes[i].SizeInCm > (saddleHeight - 20)
+						bikes[i].SizeInCm > (saddleHeight - 18)
 					) {
 						bikeResults.push(bikes[i]);
 					}
 				}
-				// If mtn, subtract 24cm (+/-2cm) to get frame size
+				// If mtn, subtract 24cm to get frame size
 				else if (bikes[i].Use.toLowerCase() == "mtn") {
 					if (bikes[i].SizeInCm < (saddleHeight - 22) &&
-						bikes[i].SizeInCm > (saddleHeight - 26)
+						bikes[i].SizeInCm > (saddleHeight - 24)
 					) {
 						bikeResults.push(bikes[i]);
 					}
@@ -201,7 +191,7 @@ $(document).ready(function() {
 				// Else, go with -20cm (?)
 				else {
 					if (bikes[i].SizeInCm < (saddleHeight - 20) &&
-						bikes[i].SizeInCm > (saddleHeight - 28)
+						bikes[i].SizeInCm > (saddleHeight - 24)
 					) {
 						bikeResults.push(bikes[i]);
 					}
@@ -234,7 +224,8 @@ $(document).ready(function() {
 			}
 		})
 		.then(function(data) {
-			// Generate dropdowns
+			// Generate bike use options
+			generateBikeTypes(window.bikes, "#bikeUseContainer");
 
 			// Set click listeners and such
 			setListeners();
