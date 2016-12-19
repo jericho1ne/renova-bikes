@@ -57,8 +57,6 @@ function generateBikeTypes(bikes, targetElement) {
 	for (var i = 0; i < uses.length; i++) {
 		var bikeUse = uses[i];
 
-		console.log(bikeUse);
-
 		var $bikeUseDiv = $('<div>')
 			.addClass('checkbox checkbox-info checkbox-circle');
 
@@ -73,9 +71,6 @@ function generateBikeTypes(bikes, targetElement) {
 
 		$bikeUseDiv.append($useInput);
 		$bikeUseDiv.append($useLabel);
-		
-				// <input id="checkbox2" class="styled" type="checkbox">
-				// <label for="checkbox2">Inline Two</label>
 
 		$(targetElement).append($bikeUseDiv);
 	} // Loop through bike 'Use' values, creating checkboxes
@@ -131,7 +126,7 @@ function loadBikes(bikes, targetElement) {
 			.appendTo(targetElement);
 
 		// Change attributes of the most recent dynamically created element
-		// $(targetElement + ' #' + bikeId).find('#bike-photo-main').attr('src', bike.Photos[0]);
+		$(targetElement + ' #' + bikeId).find('#bike-photo-main').attr('src', bike.Photos[0]);
 
 		$(targetElement + ' #' + bikeId).find('.portfolio-caption .bike-name')
 			.removeClass('loading')

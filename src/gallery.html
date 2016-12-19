@@ -143,34 +143,40 @@ $(document).ready(function() {
 
 			// Convert inseam fron in to cm to get saddle height
 			var saddleHeight = inseam * .96 * 2.54;
-			
+
+			//
 			// Trim search results on Inseam size
-			for (var i = 0; i < window.bikes.length; i++) {
-				// If road, subtract 16-18cm to get frame size
-				if (bikes[i].Use.toLowerCase() == "road") {
-					if (bikes[i].SizeInCm < (saddleHeight - 16) &&
-						bikes[i].SizeInCm > (saddleHeight - 18)
-					) {
-						window.bikeResults.push(bikes[i]);
+			//			
+			if (inseam != 0) {
+				for (var i = 0; i < window.bikes.length; i++) {
+					// If road, subtract 16-18cm to get frame size
+					if (bikes[i].Use.toLowerCase() == "road") {
+						if (bikes[i].SizeInCm < (saddleHeight - 16) &&
+							bikes[i].SizeInCm > (saddleHeight - 18)
+						) {
+							window.bikeResults.push(bikes[i]);
+						}
 					}
-				}
-				// If mtn, subtract 24cm to get frame size
-				else if (bikes[i].Use.toLowerCase() == "mtn") {
-					if (bikes[i].SizeInCm < (saddleHeight - 22) &&
-						bikes[i].SizeInCm > (saddleHeight - 24)
-					) {
-						window.bikeResults.push(bikes[i]);
+					// If mtn, subtract 24cm to get frame size
+					else if (bikes[i].Use.toLowerCase() == "mtn") {
+						if (bikes[i].SizeInCm < (saddleHeight - 22) &&
+							bikes[i].SizeInCm > (saddleHeight - 24)
+						) {
+							window.bikeResults.push(bikes[i]);
+						}
 					}
-				}
-				// Else, go with -20cm (?)
-				else {
-					if (bikes[i].SizeInCm < (saddleHeight - 20) &&
-						bikes[i].SizeInCm > (saddleHeight - 24)
-					) {
-						window.bikeResults.push(bikes[i]);
+					// Else, go with -20cm (?)
+					else {
+						if (bikes[i].SizeInCm < (saddleHeight - 20) &&
+							bikes[i].SizeInCm > (saddleHeight - 24)
+						) {
+							window.bikeResults.push(bikes[i]);
+						}
 					}
-				}
-			} // End for loop searching for matching frame sizes based on inseam
+				} // End for loop searching for matching frame sizes based on inseam
+			}
+
+			
 
 			// Trim results further on `Use` checkboxes
 			$('#bikeUseContainer .checkbox input').each(function() { 
@@ -180,21 +186,25 @@ $(document).ready(function() {
 				// from what we have left thus far
 				if (!$thisBox.is(':checked')) {
 					var bikeUse = $thisBox.attr('id');
-					var delTheseBikes = window.bikes.pluckIfKeyValueExists('Use', bikeUse);
+					var delTheseBikes = window.bikeResults.pluckIfKeyValueExists('Use', bikeUse);
 					var bikeIds = delTheseBikes.unique('Id');
 
+
+					console.log(' > REMOVING :: ' + bikeUse + ' / ' + bikeIds.length);
 					for (var i = 0; i < bikeIds.length; i++) {
 						// window.bikeResults.deleteKeyValuePair('Id', bikeIds[i]);
 
 						for (var j = window.bikeResults.length - 1; j >= 0; j--) {
 							// Check each array item for the specific key/value pair
-							if (window.bikeResults[j].Id == bikeIds[i]) {
+							if (window.bikeResults[j].Id.toLowerCase() == bikeIds[i].toLowerCase()) {
 								window.bikeResults.splice(j, 1);
 							}
 						}
 					}
 				}
 			});
+
+			debugger;
 
 			$('#bikes').empty();
 			// Load global bike results, import template, clone it

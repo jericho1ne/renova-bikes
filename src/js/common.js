@@ -28,7 +28,7 @@ Array.prototype.unique = function(key) {
 			stringValue = this[i][key].toString().trim();
 
 			if (stringValue !== '') {
-				arr.push(this[i][key].toLowerCase());	
+				arr.push(this[i][key]);	
 			}
 		}
 	}
@@ -36,7 +36,7 @@ Array.prototype.unique = function(key) {
 }
 Array.prototype.pluckIfKeyValueExists = function(key, value) {
 	return this.filter(function(eachObject) {
-		return eachObject[key] == value.toLowerCase();
+		return eachObject[key] == value;
 	});
 }
 
