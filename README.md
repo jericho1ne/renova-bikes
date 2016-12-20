@@ -1,6 +1,6 @@
 # renova-bikes
 --------------
-Used bike listing complete with fit/sizing component
+Used bike listing with fit/sizing component.
 
 ### This project makes use of
 * The [Agency Bootstrap Template](https://startbootstrap.com/template-overviews/agency/)
