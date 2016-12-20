@@ -1,5 +1,5 @@
 # renova-bikes
-================================
+--------------
 ## Used bike listing complete with fit/sizing component
 
 ### This project makes use of
