@@ -13,3 +13,6 @@ Used bike listing with fit/sizing component.
 * Gulpfile was modified to [use a source and destination directory](https://github.com/jericho1ne/renova-bikes/commit/9d093d4f6d368ef28c97799bc058cf8f303c104e).
 * PHP files added to the `copy` task. 
 * Browser live reload is now [triggered by all file changes](https://github.com/jericho1ne/renova-bikes/commit/dfe7bf79ca72c8da90f9eb16b5c79d9153c19c09), whether HTML, CSS, JS or PHP.
+
+
+![Landing Page / Bike Listing / Detail Modal](/src/img/layout.jpg)
