@@ -7,7 +7,7 @@ var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
-var php = require('gulp-connect-php');
+// var php = require('gulp-connect-php');
 
 var pkg = require('./package.json');
 
@@ -98,9 +98,9 @@ gulp.task('copy', function() {
 	gulp.src([path.src + 'img/*']).pipe(gulp.dest(path.dest + 'img'))
 })
 
-gulp.task('php', function() {
-    php.server({ base: 'build', port: 8010, keepalive: true});
-});
+// gulp.task('php', function() {
+//     php.server({ base: 'build', port: 8010, keepalive: true});
+// });
 
 // Run everything
 gulp.task('default', [
@@ -112,7 +112,7 @@ gulp.task('default', [
 ]);
 
 // Configure the bSync task to run from the destination folder
-gulp.task('bSync', ['php'], function() {
+gulp.task('bSync', function() {
 	bSync.init({
 		server: {
 			baseDir: 'app/',
